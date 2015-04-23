@@ -1,100 +1,26 @@
-
- <!DOCTYPE HTML>
-<html >
-<head>
-  <meta charset="UTF-8">
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Machine Learning, Algorithms and others]]></title>
   
-    <title>Machine Learning, Algorithms and others</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Fayou Zhang">
-    
-
-    
-    <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Machine Learning, Algorithms and others">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Machine Learning, Algorithms and others">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Machine Learning, Algorithms and others">
-<meta name="twitter:description">
-
-    
-    <link rel="alternative" href="/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-</head>
-
-  <body>
-    <header>
-      
-<div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Machine Learning, Algorithms and others" title="Machine Learning, Algorithms and others"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Machine Learning, Algorithms and others">Machine Learning, Algorithms and others</a></h1>
-				<h2 class="blog-motto"></h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:yoursite.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
-</div>
-    </header>
-    <div id="container">
-      <div id="main">
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/23/mac-ti-huan-huan-hang-fu-md/" title="Mac 替换换行符" itemprop="url">Mac 替换换行符</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Fayou Zhang" target="_blank" itemprop="author">Fayou Zhang</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-23T12:40:19.000Z" itemprop="datePublished"> 發表於 2015-04-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://yoursite.com/"/>
+  <updated>2015-04-23T13:08:36.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name><![CDATA[Fayou Zhang]]></name>
+    <email><![CDATA[zhangfayou at gmail dot com]]></email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Mac 替换换行符]]></title>
+    <link href="http://yoursite.com/2015/04/23/mac-ti-huan-huan-hang-fu-md/"/>
+    <id>http://yoursite.com/2015/04/23/mac-ti-huan-huan-hang-fu-md/</id>
+    <published>2015-04-23T12:40:19.000Z</published>
+    <updated>2015-04-23T13:08:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
 <p>起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。</p>
 <p>以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好阅读，您就多给几个例子不好么。</p>
 <p>表现如下:<br><img src="figures/bad_code_text.png" alt="bad code"></p>
@@ -162,61 +88,23 @@
 <li>有空还是学学比较好，走出自己的舒适区。</li>
 <li>最好有一本参考手册，例子很多的那种，在手边。</li>
 </ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
+<p>起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\]]>
+    </summary>
+    
+      <category term="sed" scheme="http://yoursite.com/tags/sed/"/>
+    
+  </entry>
   
-  <span></span> <a href="/tags/sed/">sed</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/23/prime_sieve/" title="prime_sieve" itemprop="url">prime_sieve</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Fayou Zhang" target="_blank" itemprop="author">Fayou Zhang</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-23T06:00:01.000Z" itemprop="datePublished"> 發表於 2015-04-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="用筛法求N内素数和">用筛法求N内素数和</h1><p>起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？</p>
+  <entry>
+    <title><![CDATA[prime_sieve]]></title>
+    <link href="http://yoursite.com/2015/04/23/prime_sieve/"/>
+    <id>http://yoursite.com/2015/04/23/prime_sieve/</id>
+    <published>2015-04-23T06:00:01.000Z</published>
+    <updated>2015-04-23T13:18:57.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="用筛法求N内素数和">用筛法求N内素数和</h1><p>起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？</p>
 <p>下面给出的算法不是最快的，但是容易理解</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve6</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n, dtype=numpy.bool)</span><br><span class="line">    prime[:<span class="number">2</span>] = <span class="keyword">False</span></span><br><span class="line">    prime[<span class="number">4</span>::<span class="number">2</span>] = <span class="keyword">False</span></span><br><span class="line">    sqrt_n = int(n ** .<span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">3</span>, sqrt_n, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[p]:</span><br><span class="line">            prime[p*p::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">return</span> prime.nonzero()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
 <p>要点是：</p>
@@ -228,61 +116,26 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve7</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n // <span class="number">2</span>, dtype=numpy.bool)</span><br><span class="line">    sqrt_n = int(n ** .<span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">3</span>, sqrt_n, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[p // <span class="number">2</span>]:</span><br><span class="line">            prime[p*p // <span class="number">2</span>::p] = <span class="keyword">False</span></span><br><span class="line">    result = <span class="number">2</span> * prime.nonzero()[<span class="number">0</span>] + <span class="number">1</span></span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
 <p>最快的方法，还是 Robert William Hanks 的：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve8</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n//<span class="number">3</span> + (n%<span class="number">6</span>==<span class="number">2</span>), dtype=numpy.bool)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>, int(n**.<span class="number">5</span>) + <span class="number">1</span>, <span class="number">3</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[i // <span class="number">3</span>]:</span><br><span class="line">            p = (i + <span class="number">1</span>) | <span class="number">1</span></span><br><span class="line">            prime[       p*p//<span class="number">3</span>     ::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">            prime[p*(p-<span class="number">2</span>*(i&amp;<span class="number">1</span>)+<span class="number">4</span>)//<span class="number">3</span>::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">    result = (<span class="number">3</span> * prime.nonzero()[<span class="number">0</span>] + <span class="number">1</span>) | <span class="number">1</span></span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">3</span></span><br><span class="line">    <span class="keyword">return</span> numpy.r_[<span class="number">2</span>,result]</span><br></pre></td></tr></table></figure>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="用筛法求N内素数和">用筛法求N内素数和</h1><p>起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？</p>
+<p>下面给出的算法不是最快的，但是容易理解</p>
+<figure class="highlight python"><table><t]]>
+    </summary>
+    
+      <category term="prime" scheme="http://yoursite.com/tags/prime/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
-  <span></span> <a href="/tags/prime/">prime</a><a href="/tags/python/">python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/04/23/python_note/" title="python_note" itemprop="url">python_note</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Fayou Zhang" target="_blank" itemprop="author">Fayou Zhang</a>
-		
-  <p class="article-time">
-    <time datetime="2015-04-23T04:48:01.000Z" itemprop="datePublished"> 發表於 2015-04-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="python_笔记">python 笔记</h1><h2 id="day_1_基本语法">day 1 基本语法</h2><h2 id="day_2_高级语法">day 2 高级语法</h2><h3 id="decorator_装饰器">decorator 装饰器</h3><p>装饰器是一个特殊的函数，它接受函数为参数，同时在它自己的内部定义一个函数(我们叫它包装函数Wrapper），在包装函数中做一些动作，同时调用函数的参数，然后返回这个包装函数。看上去挺难懂，其实看代码就比较容易了。</p>
+  <entry>
+    <title><![CDATA[python_note]]></title>
+    <link href="http://yoursite.com/2015/04/23/python_note/"/>
+    <id>http://yoursite.com/2015/04/23/python_note/</id>
+    <published>2015-04-23T04:48:01.000Z</published>
+    <updated>2015-04-23T13:10:48.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="python_笔记">python 笔记</h1><h2 id="day_1_基本语法">day 1 基本语法</h2><h2 id="day_2_高级语法">day 2 高级语法</h2><h3 id="decorator_装饰器">decorator 装饰器</h3><p>装饰器是一个特殊的函数，它接受函数为参数，同时在它自己的内部定义一个函数(我们叫它包装函数Wrapper），在包装函数中做一些动作，同时调用函数的参数，然后返回这个包装函数。看上去挺难懂，其实看代码就比较容易了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_args</span><span class="params">(func,*args,**kargs)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func,*args,**kargs)</span>:</span></span><br><span class="line">		print(<span class="string">"function &#123;0&#125; and its args &#123;1&#125; and &#123;2&#125;"</span>.format(func,*args,**kargs))</span><br><span class="line">		func(*args,**kargs)</span><br><span class="line">		print(<span class="string">"goodbye"</span>)</span><br><span class="line">	<span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
 <p>设想这样一个场景，我们自己写了很多函数</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cubic</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">3</span></span><br></pre></td></tr></table></figure>
@@ -291,298 +144,13 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">listable</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args)</span>:</span></span><br><span class="line">        arg_list = list(*args)</span><br><span class="line">        results = [func(arg) <span class="keyword">for</span> arg <span class="keyword">in</span> arg_list]</span><br><span class="line">        <span class="keyword">if</span> len(results) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> results[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> results</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
 <p>然后，我们可以给我们自己写得函数加上这个装饰器，这样就可以处理列表参数啦</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@listable</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">2</span></span><br></pre></td></tr></table></figure>
-<h2 id="day_5_算法">day 5 算法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(alist)&lt;=<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> alist</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pivot = alist.pop(np.random.randomint(len(alist)))</span><br><span class="line">        lesser = [item <span class="keyword">for</span> item <span class="keyword">in</span> alist <span class="keyword">if</span> item &lt; pivot]</span><br><span class="line">        greater = [item <span class="keyword">for</span> item <span class="keyword">in</span> alist <span class="keyword">if</span> item &gt;= pivot]</span><br><span class="line">    <span class="keyword">return</span> lesser + [pivot] + greater</span><br></pre></td></tr></table></figure>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
+<h2 id="day_5_算法">day 5 算法</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(alist)&lt;=<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> alist</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pivot = alist.pop(np.random.randomint(len(alist)))</span><br><span class="line">        lesser = [item <span class="keyword">for</span> item <span class="keyword">in</span> alist <span class="keyword">if</span> item &lt; pivot]</span><br><span class="line">        greater = [item <span class="keyword">for</span> item <span class="keyword">in</span> alist <span class="keyword">if</span> item &gt;= pivot]</span><br><span class="line">    <span class="keyword">return</span> lesser + [pivot] + greater</span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="python_笔记">python 笔记</h1><h2 id="day_1_基本语法">day 1 基本语法</h2><h2 id="day_2_高级语法">day 2 高级语法</h2><h3 id="decorator_装饰器">decorator 装饰器<]]>
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
-  <span></span> <a href="/tags/python/">python</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">標簽</p>
-		<ul class="clearfix">
-		
-			
-				<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/sed/" title="sed">sed<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/prime/" title="prime">prime<sup>1</sup></a></li>
-			
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="http://www.yangzhiping.com" target="_blank" title="阳志平的博客">阳志平的博客</a>
-            
-          </li>
-        
-    </ul>
-</div>
-
-  
-
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
-</div>
-
-</aside>
-</div>
-    </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m Fayou Zhang at Tongji University. <br/>
-			I am interested in machine learning.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-			
-		
-
-		<p class="copyright">
-		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
-		
-		<a href="/about" target="_blank" title="Fayou Zhang">Fayou Zhang</a>
-		
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-  
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else{
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-        
-    }
-  });
-});
-</script>
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
-
-
-
-<!-- Analytics Begin -->
-
-
-
-
-
-<!-- Analytics End -->
-
-<!-- Totop Begin -->
-
-	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
-
-<!-- Totop End -->
-
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-<!-- MathJax End -->
-
-<!-- Tiny_search Begin -->
-
-<!-- Tiny_search End -->
-
-  <!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-</body>
- </html>
+</feed>

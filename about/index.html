@@ -12,15 +12,21 @@
     
 
     
-    <meta name="description" content="I Love machine learning.">
+    <meta name="description" content="I Love machine learning.
+&amp;lt;!--  —&amp;gt;
+--&amp;gt;">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Machine Learning, Algorithms and others">
 <meta property="og:url" content="http://yoursite.com/about/index.html">
 <meta property="og:site_name" content="Machine Learning, Algorithms and others">
-<meta property="og:description" content="I Love machine learning.">
+<meta property="og:description" content="I Love machine learning.
+&amp;lt;!--  —&amp;gt;
+--&amp;gt;">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Machine Learning, Algorithms and others">
-<meta name="twitter:description" content="I Love machine learning.">
+<meta name="twitter:description" content="I Love machine learning.
+&amp;lt;!--  —&amp;gt;
+--&amp;gt;">
 
     
     <link rel="alternative" href="/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
@@ -87,14 +93,15 @@
 		<a href="/about" title="Fayou Zhang" target="_blank" itemprop="author">Fayou Zhang</a>
 		
   <p class="article-time">
-    <time datetime="2015-04-23T15:02:48.000Z" itemprop="datePublished"> 發表於 2015-04-23</time>
+    <time datetime="2015-04-23T15:41:40.000Z" itemprop="datePublished"> 發表於 2015-04-23</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<p>I Love machine learning.</p>
-  
+<!--  —&gt;
+-->  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -324,6 +331,36 @@ $(document).ready(function(){
 
 <!-- Tiny_search End -->
 
-      </body>
+      <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</body>
      </html>
      
