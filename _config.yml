@@ -24,15 +24,9 @@ public_dir: public
 tag_dir: tags
 archive_dir: archives
 category_dir: categories
-about_dir: about
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
-	
-feed:
-  type: atom
-  path: atom.xml
-  limit: 20
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -69,27 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: http://hexo.io/plugins/
 ## Themes: http://hexo.io/themes/
-plugins:
-	- hexo-renderer-mathjax
-	- hexo-math
-	- hexo-generator-feed
-	- hexo-tag-asset-res
-##theme: pacman
-##theme: light
 theme: jacman
-stylus:
-	compress: true
-	
-# Markdown
-## https://github.com/chjj/marked
-markdown:
-  gfm: true
-  pedantic: false
-  sanitize: false
-  tables: true
-  breaks: true
-  smartLists: true
-  smartypants: true
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
