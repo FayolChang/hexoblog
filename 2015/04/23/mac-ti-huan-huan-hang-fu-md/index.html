@@ -1,0 +1,490 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Mac 替换换行符 | Machine Learning, Algorithms and others</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Fayou Zhang">
+    
+
+    
+    <meta name="description" content="Mac 替换换行符今天又学到一招，利用 sed 替换文本文件中某字符为换行符。
+起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。
+以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac 替换换行符">
+<meta property="og:url" content="http://yoursite.com/2015/04/23/mac-ti-huan-huan-hang-fu-md/index.html">
+<meta property="og:site_name" content="Machine Learning, Algorithms and others">
+<meta property="og:description" content="Mac 替换换行符今天又学到一招，利用 sed 替换文本文件中某字符为换行符。
+起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。
+以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好">
+<meta property="og:image" content="figures/bad_code_text.png">
+<meta property="og:image" content="figures/bash_wrong_solution.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac 替换换行符">
+<meta name="twitter:description" content="Mac 替换换行符今天又学到一招，利用 sed 替换文本文件中某字符为换行符。
+起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。
+以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Machine Learning, Algorithms and others" title="Machine Learning, Algorithms and others"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Machine Learning, Algorithms and others">Machine Learning, Algorithms and others</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/23/mac-ti-huan-huan-hang-fu-md/" title="Mac 替换换行符" itemprop="url">Mac 替换换行符</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Fayou Zhang" target="_blank" itemprop="author">Fayou Zhang</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-23T12:40:19.000Z" itemprop="datePublished"> 發表於 2015-04-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目錄</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac_替换换行符"><span class="toc-number">1.</span> <span class="toc-text">Mac 替换换行符</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
+<p>起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。</p>
+<p>以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好阅读，您就多给几个例子不好么。</p>
+<p>表现如下:<br><img src="figures/bad_code_text.png" alt="bad code"></p>
+<p>需要转换如下</p>
+<table>
+<thead>
+<tr>
+<th>字段1</th>
+<th>字段2</th>
+<th>字段3</th>
+<th>字段4</th>
+<th>字段5</th>
+<th>字段6</th>
+<th>字段7</th>
+<th>字段8</th>
+<th>字段9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>10210</td>
+<td>1</td>
+<td>19435</td>
+<td>2</td>
+<td>61.5384</td>
+<td>71.9999</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>11036</td>
+<td>1</td>
+<td>5971</td>
+<td>7</td>
+<td>130.3673</td>
+<td>152.5297</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>11085</td>
+<td>1</td>
+<td>5971</td>
+<td>31</td>
+<td>302.5817</td>
+<td>354.0206</td>
+</tr>
+</tbody>
+</table>
+<p>网上搜索解决方案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"a,b,c,d"</span> |sed <span class="string">'s/,/\n/g'</span></span><br></pre></td></tr></table></figure>
+<p>结果行不通，直接把逗号换成 n 了 结果如下：</p>
+<p><img src="figures/bash_wrong_solution.png" alt="wrong_solution"></p>
+<p>继续搜索加上 Mac 关键字<br>找到 <a href="http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x" target="_blank" rel="external">http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x</a></p>
+<p>里面给出的解决方案是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'foo bar'</span> | sed <span class="operator">-e</span> <span class="string">'s/ /\'</span>$<span class="string">'\n/g'</span></span><br></pre></td></tr></table></figure>
+<p>问的人想知道 <code>\&#39;$&#39;\n/g&#39;</code> 什么意思，我不管，能用就好。</p>
+<p>感慨：</p>
+<ul>
+<li>有空还是学学比较好，走出自己的舒适区。</li>
+<li>最好有一本参考手册，例子很多的那种，在手边。</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/sed/">sed</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/04/23/mac-ti-huan-huan-hang-fu-md/" data-title="Mac 替换换行符 | Machine Learning, Algorithms and others" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/04/23/prime_sieve/"  title="prime_sieve">
+ <strong>下一篇：</strong><br/> 
+ <span>prime_sieve
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目錄</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Mac_替换换行符"><span class="toc-number">1.</span> <span class="toc-text">Mac 替换换行符</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">標簽</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sed/" title="sed">sed<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/prime/" title="prime">prime<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情鏈接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="Fayou Zhang">Fayou Zhang</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
