@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mac 替换换行符 | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="Mac 替换换行符今天又学到一招，利用 sed 替换文本文件中某字符为换行符。
+起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。
+以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">Mac 替换换行符</h1>
+  
+
+    <time datetime="2015-04-23T12:40:19.000Z">
+  <span class="day">23</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
+<p>起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。</p>
+<p>以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好阅读，您就多给几个例子不好么。</p>
+<p>表现如下:<br><img src="figures/bad_code_text.png" alt="bad code"></p>
+<p>需要转换如下</p>
+<table>
+<thead>
+<tr>
+<th>字段1</th>
+<th>字段2</th>
+<th>字段3</th>
+<th>字段4</th>
+<th>字段5</th>
+<th>字段6</th>
+<th>字段7</th>
+<th>字段8</th>
+<th>字段9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>10210</td>
+<td>1</td>
+<td>19435</td>
+<td>2</td>
+<td>61.5384</td>
+<td>71.9999</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>11036</td>
+<td>1</td>
+<td>5971</td>
+<td>7</td>
+<td>130.3673</td>
+<td>152.5297</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>11085</td>
+<td>1</td>
+<td>5971</td>
+<td>31</td>
+<td>302.5817</td>
+<td>354.0206</td>
+</tr>
+</tbody>
+</table>
+<p>网上搜索解决方案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"a,b,c,d"</span> |sed <span class="string">'s/,/\n/g'</span></span><br></pre></td></tr></table></figure>
+<p>结果行不通，直接把逗号换成 n 了 结果如下：</p>
+<p><img src="figures/bash_wrong_solution.png" alt="wrong_solution"></p>
+<p>继续搜索加上 Mac 关键字<br>找到 <a href="http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x" target="_blank" rel="external">http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x</a></p>
+<p>里面给出的解决方案是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'foo bar'</span> | sed <span class="operator">-e</span> <span class="string">'s/ /\'</span>$<span class="string">'\n/g'</span></span><br></pre></td></tr></table></figure>
+<p>问的人想知道 <code>\&#39;$&#39;\n/g&#39;</code> 什么意思，我不管，能用就好。</p>
+<p>感慨：</p>
+<ul>
+<li>有空还是学学比较好，走出自己的舒适区。</li>
+<li>最好有一本参考手册，例子很多的那种，在手边。</li>
+</ul>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/sed/">sed</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+</body>
+</html>

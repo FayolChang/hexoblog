@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Machine Learning, Algorithms and others]]></title>
+  
+  <link href="/hexoblog/atom.xml" rel="self"/>
+  <link href="http://yoursite.com/"/>
+  <updated>2015-04-27T05:37:13.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name><![CDATA[Fayou Zhang]]></name>
+    <email><![CDATA[zhangfayou at gmail dot com]]></email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[kruskal]]></title>
+    <link href="http://yoursite.com/2015/04/27/kruskal/"/>
+    <id>http://yoursite.com/2015/04/27/kruskal/</id>
+    <published>2015-04-27T04:20:47.000Z</published>
+    <updated>2015-04-27T05:37:13.000Z</updated>
+    <content type="html"><![CDATA[<p>kruskal 算法是一种贪心算法。基本思想是：<br>1.先把原图 G 的所有顶点(vertex)加到一个集合。把这些顶点看成一棵棵单独的树，每个树的根指向自身。<br>2.对G 的所有边进行从小到大排序。<br>3.把这些边一条条的加入新的集合。注意不要产生回路(环）。直到所有边处理完毕或者边的数目达到 V - 1</p>
+<p>伪代码如下（来自 wiki）</p>
+<pre><code>KRUSKAL(<span class="keyword">G</span>):
+1 A = ∅
+2 <span class="keyword">foreach</span> v ∈ <span class="keyword">G</span>.V:
+3    MAKE-<span class="keyword">SET</span>(v)
+4 <span class="keyword">foreach</span> (<span class="keyword">u</span>, v) ordered <span class="keyword">by</span> weight(<span class="keyword">u</span>, v), increasing:
+5    <span class="keyword">if</span> FIND-<span class="keyword">SET</span>(<span class="keyword">u</span>) ≠ FIND-<span class="keyword">SET</span>(v):
+6       A = A ∪ {(<span class="keyword">u</span>, v)}
+7       UNION(<span class="keyword">u</span>, v)
+8 <span class="keyword">return</span> A
+</code></pre><table>
+<thead>
+<tr>
+<th>Iamge</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_1.png" alt="1"></td>
+<td><strong>AD</strong> and <strong>CE</strong> are the shortest edges, with length 5, and <strong>AD</strong> has been arbitrarily chosen, so it is highlighted.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_2.png" alt="2"></td>
+<td><strong>CE</strong> is now the shortest edge that does not form a cycle, with length 5, so it is highlighted as the second edge.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_3.png" alt="3"></td>
+<td>The next edge, <strong>DF</strong> with length 6, is highlighted using much the same method.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_4.png" alt="4"></td>
+<td>The next-shortest edges are <strong>AB</strong> and <strong>BE</strong>, both with length 7. <strong>AB</strong> is chosen arbitrarily, and is highlighted. The edge <strong>BD</strong> has been highlighted in red, because there already exists a path (in green) between <strong>B</strong> and <strong>D</strong>, so it would form a cycle (<strong>ABD</strong>) if it were chosen.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_5.png" alt="5"></td>
+<td>The process continues to highlight the next-smallest edge, <strong>BE</strong> with length 7. Many more edges are highlighted in red at this stage: <strong>BC</strong> because it would form the loop <strong>BCE</strong>, <strong>DE</strong> because it would form the loop <strong>DEBA</strong>, and <strong>FE</strong> because it would form <strong>FEBAD</strong>.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_6.png" alt="6"></td>
+<td>Finally, the process finishes with the edge <strong>EG</strong> of length 9, and the minimum spanning tree is found.</td>
+</tr>
+</tbody>
+</table>
+<p>这里面最引人入胜的是引入 disjoint set 来避免回路。注意到当加入边 e 时，如果 e 的2个邻接点在同一棵树中，那么必然产生回路。</p>
+<p>所以我们在加入边的时候，要判断2个邻接点是不是在同一棵树中。如何判断呢？我们可以找出其根节点，如果2个节点的根节点相同，我们就不加入这条边。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DisjointSet</span><span class="params">(dict)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">##字典的 value存的是 root </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        self[item] = item</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        parent = self[item]</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">while</span> self[parent] != parent:</span><br><span class="line">            parent = self[parent]</span><br><span class="line"> </span><br><span class="line">        self[item] = parent</span><br><span class="line">        <span class="keyword">return</span> parent</span><br><span class="line">        </span><br><span class="line">    <span class="comment">#正常情况下，是应该找到 item1，item2的 root 的，但是在方法 kruskal 中，t1,t2</span></span><br><span class="line">    <span class="comment">#已经是 root 了，故不需要在找了</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span><span class="params">(self, item1, item2)</span>:</span></span><br><span class="line">        self[item2] = self[item1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kruskal</span><span class="params">( nodes, edges )</span>:</span></span><br><span class="line">    forest = DisjointSet()</span><br><span class="line">    mst = []</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> nodes:</span><br><span class="line">        forest.add( n )</span><br><span class="line"> </span><br><span class="line">    sz = len(nodes) - <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> sorted( edges, key=<span class="keyword">lambda</span> edge:edge[<span class="number">2</span>] ):</span><br><span class="line">        n1, n2, _ = e</span><br><span class="line">        t1 = forest.find(n1)</span><br><span class="line">        t2 = forest.find(n2)</span><br><span class="line">        <span class="keyword">if</span> t1 != t2:</span><br><span class="line">            mst.append(e)</span><br><span class="line">            sz -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> sz == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> mst</span><br><span class="line">         </span><br><span class="line">            forest.union(t1, t2)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">#test   </span></span><br><span class="line"> </span><br><span class="line">nodes = list( <span class="string">"ABCDEFG"</span> )</span><br><span class="line">edges = [ (<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="number">7</span>), (<span class="string">"A"</span>, <span class="string">"D"</span>, <span class="number">5</span>),</span><br><span class="line">          (<span class="string">"B"</span>, <span class="string">"C"</span>, <span class="number">8</span>), (<span class="string">"B"</span>, <span class="string">"D"</span>, <span class="number">9</span>), (<span class="string">"B"</span>, <span class="string">"E"</span>, <span class="number">7</span>),</span><br><span class="line">      (<span class="string">"C"</span>, <span class="string">"E"</span>, <span class="number">5</span>),</span><br><span class="line">      (<span class="string">"D"</span>, <span class="string">"E"</span>, <span class="number">15</span>), (<span class="string">"D"</span>, <span class="string">"F"</span>, <span class="number">6</span>),</span><br><span class="line">      (<span class="string">"E"</span>, <span class="string">"F"</span>, <span class="number">8</span>), (<span class="string">"E"</span>, <span class="string">"G"</span>, <span class="number">9</span>),</span><br><span class="line">      (<span class="string">"F"</span>, <span class="string">"G"</span>, <span class="number">11</span>)]</span><br><span class="line">         </span><br><span class="line"><span class="keyword">print</span> ( kruskal( nodes, edges ) )</span><br><span class="line"><span class="comment">#output: [('A', 'D', 5), ('C', 'E', 5), ('D', 'F', 6), ('A', 'B', 7), ('B', 'E', 7), ('E', 'G', 9)]</span></span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<p>kruskal 算法是一种贪心算法。基本思想是：<br>1.先把原图 G 的所有顶点(vertex)加到一个集合。把这些顶点看成一棵棵单独的树，每个树的根指向自身。<br>2.对G 的所有边进行从小到大排序。<br>3.把这些边一条条的加入新的集合。注意不要产生回路(环）。]]>
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/tags/algorithms/"/>
+    
+      <category term="graph" scheme="http://yoursite.com/tags/graph/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[DFS and BFS]]></title>
+    <link href="http://yoursite.com/2015/04/24/binary_tree_traversal/"/>
+    <id>http://yoursite.com/2015/04/24/binary_tree_traversal/</id>
+    <published>2015-04-24T04:20:47.000Z</published>
+    <updated>2015-04-27T05:10:01.000Z</updated>
+    <content type="html"><![CDATA[<p>今天学习了树深度优先遍历和广度优先遍历，对我自己来说，还是邻接表 (adjacent List) 比较符合自己的思维。下面是算法用得图形</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> Image</span><br><span class="line">Image(url=<span class="string">'http://glue.jjj.sun.ac.za/~james/IntroPython/images/binary.png'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://glue.jjj.sun.ac.za/~james/IntroPython/images/binary.png"></p>
+<p>这个图用邻接表表示就如程序中的 graph 变量。<br>这里巧妙地用了列表来存储节点。注意广度优先遍历和深度优先遍历只差一个：<br><strong>是先弹出(pop)最后一个还是第一个</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph=&#123; <span class="number">4</span>:[<span class="number">2</span>,<span class="number">6</span>], <span class="number">2</span>:[<span class="number">4</span>,<span class="number">1</span>,<span class="number">3</span>], <span class="number">6</span>:[<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>], <span class="number">3</span>:[<span class="number">2</span>], <span class="number">1</span>:[<span class="number">2</span>], <span class="number">5</span>:[<span class="number">6</span>], <span class="number">7</span>:[<span class="number">6</span>] &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(graph, start)</span>:</span></span><br><span class="line">    path = []</span><br><span class="line">    lst = [start]</span><br><span class="line">    <span class="keyword">while</span> lst:</span><br><span class="line">        vertex = lst.pop(-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> vertex <span class="keyword">not</span> <span class="keyword">in</span> path:</span><br><span class="line">            path.append(vertex)</span><br><span class="line">            lst.extend(graph[vertex])</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> dfs(graph, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">[<span class="number">4</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#graph=&#123; 4:[2,6], 2:[4,1,3], 6:[4,5,7], 3:[2], 1:[2], 5:[6], 7:[6] &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(graph, start)</span>:</span></span><br><span class="line">    path = []</span><br><span class="line">    queue = [start]</span><br><span class="line">    <span class="keyword">while</span> queue:</span><br><span class="line">        vertex = queue.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> vertex <span class="keyword">not</span> <span class="keyword">in</span> path:</span><br><span class="line">            path.append(vertex)</span><br><span class="line">            queue.extend(graph[vertex])</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> bfs(graph, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">[<span class="number">4</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>一开始我没有看明白，就一点一点来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst.pop(-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lst.extend([<span class="number">2</span>,<span class="number">6</span>])</span><br><span class="line"> lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+<p>这里是关键了，如果一直是 pop(-1)，那么后加进来的就会被先弹出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst.pop(-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lst.extend([<span class="number">5</span>,<span class="number">7</span>])</span><br><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>到这里已经很清楚了，如果是弹出第一个，那么节点2会被先弹出，而不是7这样就是广度优先，如果先弹出最后一个节点，这里是7，就是深度优先。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>今天学习了树深度优先遍历和广度优先遍历，对我自己来说，还是邻接表 (adjacent List) 比较符合自己的思维。下面是算法用得图形</p>
+<figure class="highlight python"><table><tr><td class="gutter"><]]>
+    </summary>
+    
+      <category term="algorithms" scheme="http://yoursite.com/tags/algorithms/"/>
+    
+      <category term="graph" scheme="http://yoursite.com/tags/graph/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Mac 替换换行符]]></title>
+    <link href="http://yoursite.com/2015/04/23/mac-ti-huan-huan-hang-fu-md/"/>
+    <id>http://yoursite.com/2015/04/23/mac-ti-huan-huan-hang-fu-md/</id>
+    <published>2015-04-23T12:40:19.000Z</published>
+    <updated>2015-04-23T13:08:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
+<p>起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\x0a。</p>
+<p>以前就知道这类替换可以用 sed 或者 awk 之类的工具做。但是因为一直比较（恐惧？/懒惰？）命令行，而且网上一搜一大把解决方案。也就没有认真学。而且 man 的帮助文档很不好阅读，您就多给几个例子不好么。</p>
+<p>表现如下:<br><img src="figures/bad_code_text.png" alt="bad code"></p>
+<p>需要转换如下</p>
+<table>
+<thead>
+<tr>
+<th>字段1</th>
+<th>字段2</th>
+<th>字段3</th>
+<th>字段4</th>
+<th>字段5</th>
+<th>字段6</th>
+<th>字段7</th>
+<th>字段8</th>
+<th>字段9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>10210</td>
+<td>1</td>
+<td>19435</td>
+<td>2</td>
+<td>61.5384</td>
+<td>71.9999</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>11036</td>
+<td>1</td>
+<td>5971</td>
+<td>7</td>
+<td>130.3673</td>
+<td>152.5297</td>
+</tr>
+<tr>
+<td>2018</td>
+<td>2011-10-03 00:00:00.000</td>
+<td>10</td>
+<td>11085</td>
+<td>1</td>
+<td>5971</td>
+<td>31</td>
+<td>302.5817</td>
+<td>354.0206</td>
+</tr>
+</tbody>
+</table>
+<p>网上搜索解决方案</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"a,b,c,d"</span> |sed <span class="string">'s/,/\n/g'</span></span><br></pre></td></tr></table></figure>
+<p>结果行不通，直接把逗号换成 n 了 结果如下：</p>
+<p><img src="figures/bash_wrong_solution.png" alt="wrong_solution"></p>
+<p>继续搜索加上 Mac 关键字<br>找到 <a href="http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x" target="_blank" rel="external">http://superuser.com/questions/307165/newlines-in-sed-on-mac-os-x</a></p>
+<p>里面给出的解决方案是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'foo bar'</span> | sed <span class="operator">-e</span> <span class="string">'s/ /\'</span>$<span class="string">'\n/g'</span></span><br></pre></td></tr></table></figure>
+<p>问的人想知道 <code>\&#39;$&#39;\n/g&#39;</code> 什么意思，我不管，能用就好。</p>
+<p>感慨：</p>
+<ul>
+<li>有空还是学学比较好，走出自己的舒适区。</li>
+<li>最好有一本参考手册，例子很多的那种，在手边。</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Mac_替换换行符">Mac 替换换行符</h2><p>今天又学到一招，利用 sed 替换文本文件中某字符为换行符。</p>
+<p>起因是这样，导师一个文本文件貌似损坏了，整个文件只有一行(可以这么说）。表现为：原来的 tab 分隔符变成了\x09，换行符变成了\]]>
+    </summary>
+    
+      <category term="sed" scheme="http://yoursite.com/tags/sed/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[prime_sieve]]></title>
+    <link href="http://yoursite.com/2015/04/23/prime_sieve/"/>
+    <id>http://yoursite.com/2015/04/23/prime_sieve/</id>
+    <published>2015-04-23T06:00:01.000Z</published>
+    <updated>2015-04-23T13:18:57.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="用筛法求N内素数和">用筛法求N内素数和</h1><p>起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？</p>
+<p>下面给出的算法不是最快的，但是容易理解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve6</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n, dtype=numpy.bool)</span><br><span class="line">    prime[:<span class="number">2</span>] = <span class="keyword">False</span></span><br><span class="line">    prime[<span class="number">4</span>::<span class="number">2</span>] = <span class="keyword">False</span></span><br><span class="line">    sqrt_n = int(n ** .<span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">3</span>, sqrt_n, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[p]:</span><br><span class="line">            prime[p*p::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">return</span> prime.nonzero()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>要点是：</p>
+<ul>
+<li>从3开始，到 $\sqrt{n}$ ,步长为2,这样就把偶数给省去了。</li>
+<li>在筛的过程中，从 $p^2$ 开始，步长是$2p$，而且用数组，可以一步就设定这么多数值</li>
+</ul>
+<p>We could avoid allocating space for the even numbers, improving memory locality:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve7</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n // <span class="number">2</span>, dtype=numpy.bool)</span><br><span class="line">    sqrt_n = int(n ** .<span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">3</span>, sqrt_n, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[p // <span class="number">2</span>]:</span><br><span class="line">            prime[p*p // <span class="number">2</span>::p] = <span class="keyword">False</span></span><br><span class="line">    result = <span class="number">2</span> * prime.nonzero()[<span class="number">0</span>] + <span class="number">1</span></span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p>最快的方法，还是 Robert William Hanks 的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve8</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n//<span class="number">3</span> + (n%<span class="number">6</span>==<span class="number">2</span>), dtype=numpy.bool)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>, int(n**.<span class="number">5</span>) + <span class="number">1</span>, <span class="number">3</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[i // <span class="number">3</span>]:</span><br><span class="line">            p = (i + <span class="number">1</span>) | <span class="number">1</span></span><br><span class="line">            prime[       p*p//<span class="number">3</span>     ::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">            prime[p*(p-<span class="number">2</span>*(i&amp;<span class="number">1</span>)+<span class="number">4</span>)//<span class="number">3</span>::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">    result = (<span class="number">3</span> * prime.nonzero()[<span class="number">0</span>] + <span class="number">1</span>) | <span class="number">1</span></span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">3</span></span><br><span class="line">    <span class="keyword">return</span> numpy.r_[<span class="number">2</span>,result]</span><br></pre></td></tr></table></figure>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="用筛法求N内素数和">用筛法求N内素数和</h1><p>起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？</p>
+<p>下面给出的算法不是最快的，但是容易理解</p>
+<figure class="highlight python"><table><t]]>
+    </summary>
+    
+      <category term="prime" scheme="http://yoursite.com/tags/prime/"/>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[python_note]]></title>
+    <link href="http://yoursite.com/2015/04/23/python_note/"/>
+    <id>http://yoursite.com/2015/04/23/python_note/</id>
+    <published>2015-04-23T04:48:01.000Z</published>
+    <updated>2015-04-24T07:22:58.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="python_笔记">python 笔记</h1><h2 id="day_1_基本语法">day 1 基本语法</h2><h2 id="day_2_高级语法">day 2 高级语法</h2><h3 id="decorator_装饰器">decorator 装饰器</h3><p>装饰器是一个特殊的函数，它接受函数为参数，同时在它自己的内部定义一个函数(我们叫它包装函数Wrapper），在包装函数中做一些动作，同时调用函数的参数，然后返回这个包装函数。看上去挺难懂，其实看代码就比较容易了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_args</span><span class="params">(func,*args,**kargs)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func,*args,**kargs)</span>:</span></span><br><span class="line">		print(<span class="string">"function &#123;0&#125; and its args &#123;1&#125; and &#123;2&#125;"</span>.format(func,*args,**kargs))</span><br><span class="line">		func(*args,**kargs)</span><br><span class="line">		print(<span class="string">"goodbye"</span>)</span><br><span class="line">	<span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+<p>设想这样一个场景，我们自己写了很多函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cubic</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">3</span></span><br></pre></td></tr></table></figure>
+<p>但是这样的函数只能一个一个地算，不能接受列表作为参数的。我们当然不想一个函数一个函数得去改。<br>最好能加上个 listable 的功能就好了（类似 Mathematica 的 Listable Attribute)。</p>
+<p>这个时候就轮到装饰器上场了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">listable</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args)</span>:</span></span><br><span class="line">        arg_list = list(*args)</span><br><span class="line">        results = [func(arg) <span class="keyword">for</span> arg <span class="keyword">in</span> arg_list]</span><br><span class="line">        <span class="keyword">if</span> len(results) == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> results[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> results</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+<p>然后，我们可以给我们自己写得函数加上这个装饰器，这样就可以处理列表参数啦</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="decorator">@listable</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">square</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x ** <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>当然最让我震撼的是我看到下面的代码，它使用装饰器来缓存递归函数的值，可以让递归不用重复计算。<br>虽然可以改成迭代，但是递归代码往往更容易理解。而且，使用装饰器后，可以安心的写递归代码，其他都不用操心了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">memoize</span><span class="params">(func)</span>:</span></span><br><span class="line">    func.cache = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> args <span class="keyword">in</span> func.cache:</span><br><span class="line">            <span class="keyword">return</span> func.cache[args]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            func.cache[args] = func(*args)</span><br><span class="line">            <span class="keyword">return</span> func.cache[args]</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="decorator">@memoize</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fibonacci</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> n &lt;= <span class="number">0</span>:</span><br><span class="line">        print(<span class="string">"n must be positive integer"</span>)</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span> <span class="keyword">or</span> n == <span class="number">2</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>: <span class="keyword">return</span> fibonacci(n-<span class="number">1</span>)+fibonacci(n-<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>还有一个让我觉得牛逼的，就是 ipython notebook。 这家伙居然知道我用了缓存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">%timeit fibonacci(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<pre><code><span class="type">The</span> slowest run took <span class="number">50</span>.<span class="number">45</span> times longer than the fastest. <span class="type">This</span> could mean that an intermediate <span class="literal">result</span> <span class="keyword">is</span> being cached 
+<span class="number">1000000</span> loops, best <span class="keyword">of</span> <span class="number">3</span>: <span class="number">276</span> ns per loop
+</code></pre><h2 id="day_5_算法">day 5 算法</h2><h3 id="快排">快排</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> len(alist)&lt;=<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> alist</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        pivot = alist.pop(np.random.randomint(len(alist)))</span><br><span class="line">        lesser = [item <span class="keyword">for</span> item <span class="keyword">in</span> alist <span class="keyword">if</span> item &lt; pivot]</span><br><span class="line">        greater = [item <span class="keyword">for</span> item <span class="keyword">in</span> alist <span class="keyword">if</span> item &gt;= pivot]</span><br><span class="line">    <span class="keyword">return</span> lesser + [pivot] + greater</span><br></pre></td></tr></table></figure>
+<h3 id="二分搜索">二分搜索</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(sorted_list,element)</span>:</span></span><br><span class="line">    <span class="comment">#假定列表是升序排列</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bsearch</span><span class="params">(sorted_list,element,low,high)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> high == low:</span><br><span class="line">            <span class="keyword">return</span> element == sorted_list[high]</span><br><span class="line">        mid = (high + low)//<span class="number">2</span></span><br><span class="line">        <span class="keyword">if</span> sorted_list[mid] == element:</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">elif</span> sorted_list[mid] &gt; element:</span><br><span class="line">            <span class="keyword">if</span> mid == low:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> bsearch(sorted_list,element,low,mid-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> bsearch(sorted_list,element,mid+<span class="number">1</span>,high)</span><br><span class="line">        </span><br><span class="line">        Length = len(sorted_list)</span><br><span class="line">    <span class="keyword">if</span> Length == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> bsearch(sorted_list,element,<span class="number">0</span>,Length - <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="深度优先搜索(DFS)">深度优先搜索(DFS)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">graph = &#123;<span class="string">'A'</span>: set([<span class="string">'B'</span>, <span class="string">'C'</span>]),</span><br><span class="line">         <span class="string">'B'</span>: set([<span class="string">'A'</span>, <span class="string">'D'</span>, <span class="string">'E'</span>]),</span><br><span class="line">         <span class="string">'C'</span>: set([<span class="string">'A'</span>, <span class="string">'F'</span>]),</span><br><span class="line">         <span class="string">'D'</span>: set([<span class="string">'B'</span>]),</span><br><span class="line">         <span class="string">'E'</span>: set([<span class="string">'B'</span>, <span class="string">'F'</span>]),</span><br><span class="line">         <span class="string">'F'</span>: set([<span class="string">'C'</span>, <span class="string">'E'</span>])&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(graph, start)</span>:</span></span><br><span class="line">    visited, stack = set(), [start]</span><br><span class="line">    <span class="keyword">while</span> stack:</span><br><span class="line">        vertex = stack.pop()</span><br><span class="line">        <span class="keyword">if</span> vertex <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">            visited.add(vertex)</span><br><span class="line">            stack.extend(graph[vertex] - visited)</span><br><span class="line">    <span class="keyword">return</span> visited</span><br><span class="line"></span><br><span class="line">dfs(graph, <span class="string">'A'</span>) <span class="comment"># &#123;'E', 'D', 'F', 'A', 'C', 'B'&#125;</span></span><br></pre></td></tr></table></figure>]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="python_笔记">python 笔记</h1><h2 id="day_1_基本语法">day 1 基本语法</h2><h2 id="day_2_高级语法">day 2 高级语法</h2><h3 id="decorator_装饰器">decorator 装饰器<]]>
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+</feed>

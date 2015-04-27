@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>prime_sieve | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="用筛法求N内素数和起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？
+下面给出的算法不是最快的，但是容易理解
+123456789101112import numpydef sieve6(n):    &quot;&quot;&quot;Return an array of the primes below n.&quot;&quot;&quot; ">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">prime_sieve</h1>
+  
+
+    <time datetime="2015-04-23T06:00:01.000Z">
+  <span class="day">23</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h1 id="用筛法求N内素数和">用筛法求N内素数和</h1><p>起源于知乎上的一个问题，求10亿内的素数之和，什么方法最快？</p>
+<p>下面给出的算法不是最快的，但是容易理解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve6</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n, dtype=numpy.bool)</span><br><span class="line">    prime[:<span class="number">2</span>] = <span class="keyword">False</span></span><br><span class="line">    prime[<span class="number">4</span>::<span class="number">2</span>] = <span class="keyword">False</span></span><br><span class="line">    sqrt_n = int(n ** .<span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">3</span>, sqrt_n, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[p]:</span><br><span class="line">            prime[p*p::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">return</span> prime.nonzero()[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>要点是：</p>
+<ul>
+<li>从3开始，到 $\sqrt{n}$ ,步长为2,这样就把偶数给省去了。</li>
+<li>在筛的过程中，从 $p^2$ 开始，步长是$2p$，而且用数组，可以一步就设定这么多数值</li>
+</ul>
+<p>We could avoid allocating space for the even numbers, improving memory locality:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve7</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n // <span class="number">2</span>, dtype=numpy.bool)</span><br><span class="line">    sqrt_n = int(n ** .<span class="number">5</span>) + <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> p <span class="keyword">in</span> range(<span class="number">3</span>, sqrt_n, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[p // <span class="number">2</span>]:</span><br><span class="line">            prime[p*p // <span class="number">2</span>::p] = <span class="keyword">False</span></span><br><span class="line">    result = <span class="number">2</span> * prime.nonzero()[<span class="number">0</span>] + <span class="number">1</span></span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+<p>最快的方法，还是 Robert William Hanks 的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sieve8</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">"""Return an array of the primes below n."""</span></span><br><span class="line">    prime = numpy.ones(n//<span class="number">3</span> + (n%<span class="number">6</span>==<span class="number">2</span>), dtype=numpy.bool)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>, int(n**.<span class="number">5</span>) + <span class="number">1</span>, <span class="number">3</span>):</span><br><span class="line">        <span class="keyword">if</span> prime[i // <span class="number">3</span>]:</span><br><span class="line">            p = (i + <span class="number">1</span>) | <span class="number">1</span></span><br><span class="line">            prime[       p*p//<span class="number">3</span>     ::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">            prime[p*(p-<span class="number">2</span>*(i&amp;<span class="number">1</span>)+<span class="number">4</span>)//<span class="number">3</span>::<span class="number">2</span>*p] = <span class="keyword">False</span></span><br><span class="line">    result = (<span class="number">3</span> * prime.nonzero()[<span class="number">0</span>] + <span class="number">1</span>) | <span class="number">1</span></span><br><span class="line">    result[<span class="number">0</span>] = <span class="number">3</span></span><br><span class="line">    <span class="keyword">return</span> numpy.r_[<span class="number">2</span>,result]</span><br></pre></td></tr></table></figure>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/prime/">prime</a><a href="/hexoblog/tags/python/">python</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+</body>
+</html>

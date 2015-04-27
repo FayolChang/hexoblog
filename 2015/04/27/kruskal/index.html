@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>kruskal | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="kruskal 算法是一种贪心算法。基本思想是：1.先把原图 G 的所有顶点(vertex)加到一个集合。把这些顶点看成一棵棵单独的树，每个树的根指向自身。2.对G 的所有边进行从小到大排序。3.把这些边一条条的加入新的集合。注意不要产生回路(环）。直到所有边处理完毕或者边的数目达到 V - 1
+伪">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">kruskal</h1>
+  
+
+    <time datetime="2015-04-27T04:20:47.000Z">
+  <span class="day">27</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <p>kruskal 算法是一种贪心算法。基本思想是：<br>1.先把原图 G 的所有顶点(vertex)加到一个集合。把这些顶点看成一棵棵单独的树，每个树的根指向自身。<br>2.对G 的所有边进行从小到大排序。<br>3.把这些边一条条的加入新的集合。注意不要产生回路(环）。直到所有边处理完毕或者边的数目达到 V - 1</p>
+<p>伪代码如下（来自 wiki）</p>
+<pre><code>KRUSKAL(<span class="keyword">G</span>):
+1 A = ∅
+2 <span class="keyword">foreach</span> v ∈ <span class="keyword">G</span>.V:
+3    MAKE-<span class="keyword">SET</span>(v)
+4 <span class="keyword">foreach</span> (<span class="keyword">u</span>, v) ordered <span class="keyword">by</span> weight(<span class="keyword">u</span>, v), increasing:
+5    <span class="keyword">if</span> FIND-<span class="keyword">SET</span>(<span class="keyword">u</span>) ≠ FIND-<span class="keyword">SET</span>(v):
+6       A = A ∪ {(<span class="keyword">u</span>, v)}
+7       UNION(<span class="keyword">u</span>, v)
+8 <span class="keyword">return</span> A
+</code></pre><table>
+<thead>
+<tr>
+<th>Iamge</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_1.png" alt="1"></td>
+<td><strong>AD</strong> and <strong>CE</strong> are the shortest edges, with length 5, and <strong>AD</strong> has been arbitrarily chosen, so it is highlighted.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_2.png" alt="2"></td>
+<td><strong>CE</strong> is now the shortest edge that does not form a cycle, with length 5, so it is highlighted as the second edge.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_3.png" alt="3"></td>
+<td>The next edge, <strong>DF</strong> with length 6, is highlighted using much the same method.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_4.png" alt="4"></td>
+<td>The next-shortest edges are <strong>AB</strong> and <strong>BE</strong>, both with length 7. <strong>AB</strong> is chosen arbitrarily, and is highlighted. The edge <strong>BD</strong> has been highlighted in red, because there already exists a path (in green) between <strong>B</strong> and <strong>D</strong>, so it would form a cycle (<strong>ABD</strong>) if it were chosen.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_5.png" alt="5"></td>
+<td>The process continues to highlight the next-smallest edge, <strong>BE</strong> with length 7. Many more edges are highlighted in red at this stage: <strong>BC</strong> because it would form the loop <strong>BCE</strong>, <strong>DE</strong> because it would form the loop <strong>DEBA</strong>, and <strong>FE</strong> because it would form <strong>FEBAD</strong>.</td>
+</tr>
+<tr>
+<td><img src="figures/kruskal/400px-Kruskal_Algorithm_6.png" alt="6"></td>
+<td>Finally, the process finishes with the edge <strong>EG</strong> of length 9, and the minimum spanning tree is found.</td>
+</tr>
+</tbody>
+</table>
+<p>这里面最引人入胜的是引入 disjoint set 来避免回路。注意到当加入边 e 时，如果 e 的2个邻接点在同一棵树中，那么必然产生回路。</p>
+<p>所以我们在加入边的时候，要判断2个邻接点是不是在同一棵树中。如何判断呢？我们可以找出其根节点，如果2个节点的根节点相同，我们就不加入这条边。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DisjointSet</span><span class="params">(dict)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">##字典的 value存的是 root </span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        self[item] = item</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">find</span><span class="params">(self, item)</span>:</span></span><br><span class="line">        parent = self[item]</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">while</span> self[parent] != parent:</span><br><span class="line">            parent = self[parent]</span><br><span class="line"> </span><br><span class="line">        self[item] = parent</span><br><span class="line">        <span class="keyword">return</span> parent</span><br><span class="line">        </span><br><span class="line">    <span class="comment">#正常情况下，是应该找到 item1，item2的 root 的，但是在方法 kruskal 中，t1,t2</span></span><br><span class="line">    <span class="comment">#已经是 root 了，故不需要在找了</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">union</span><span class="params">(self, item1, item2)</span>:</span></span><br><span class="line">        self[item2] = self[item1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kruskal</span><span class="params">( nodes, edges )</span>:</span></span><br><span class="line">    forest = DisjointSet()</span><br><span class="line">    mst = []</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> nodes:</span><br><span class="line">        forest.add( n )</span><br><span class="line"> </span><br><span class="line">    sz = len(nodes) - <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> sorted( edges, key=<span class="keyword">lambda</span> edge:edge[<span class="number">2</span>] ):</span><br><span class="line">        n1, n2, _ = e</span><br><span class="line">        t1 = forest.find(n1)</span><br><span class="line">        t2 = forest.find(n2)</span><br><span class="line">        <span class="keyword">if</span> t1 != t2:</span><br><span class="line">            mst.append(e)</span><br><span class="line">            sz -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">if</span> sz == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> mst</span><br><span class="line">         </span><br><span class="line">            forest.union(t1, t2)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment">#test   </span></span><br><span class="line"> </span><br><span class="line">nodes = list( <span class="string">"ABCDEFG"</span> )</span><br><span class="line">edges = [ (<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="number">7</span>), (<span class="string">"A"</span>, <span class="string">"D"</span>, <span class="number">5</span>),</span><br><span class="line">          (<span class="string">"B"</span>, <span class="string">"C"</span>, <span class="number">8</span>), (<span class="string">"B"</span>, <span class="string">"D"</span>, <span class="number">9</span>), (<span class="string">"B"</span>, <span class="string">"E"</span>, <span class="number">7</span>),</span><br><span class="line">      (<span class="string">"C"</span>, <span class="string">"E"</span>, <span class="number">5</span>),</span><br><span class="line">      (<span class="string">"D"</span>, <span class="string">"E"</span>, <span class="number">15</span>), (<span class="string">"D"</span>, <span class="string">"F"</span>, <span class="number">6</span>),</span><br><span class="line">      (<span class="string">"E"</span>, <span class="string">"F"</span>, <span class="number">8</span>), (<span class="string">"E"</span>, <span class="string">"G"</span>, <span class="number">9</span>),</span><br><span class="line">      (<span class="string">"F"</span>, <span class="string">"G"</span>, <span class="number">11</span>)]</span><br><span class="line">         </span><br><span class="line"><span class="keyword">print</span> ( kruskal( nodes, edges ) )</span><br><span class="line"><span class="comment">#output: [('A', 'D', 5), ('C', 'E', 5), ('D', 'F', 6), ('A', 'B', 7), ('B', 'E', 7), ('E', 'G', 9)]</span></span><br></pre></td></tr></table></figure>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/algorithms/">algorithms</a><a href="/hexoblog/tags/graph/">graph</a><a href="/hexoblog/tags/python/">python</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+</body>
+</html>

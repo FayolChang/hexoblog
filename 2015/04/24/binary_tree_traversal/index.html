@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>DFS and BFS | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="今天学习了树深度优先遍历和广度优先遍历，对我自己来说，还是邻接表 (adjacent List) 比较符合自己的思维。下面是算法用得图形
+12from IPython.display import ImageImage(url=&#39;http://glue.jjj.sun.ac.za/~james/In">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">DFS and BFS</h1>
+  
+
+    <time datetime="2015-04-24T04:20:47.000Z">
+  <span class="day">24</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <p>今天学习了树深度优先遍历和广度优先遍历，对我自己来说，还是邻接表 (adjacent List) 比较符合自己的思维。下面是算法用得图形</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> Image</span><br><span class="line">Image(url=<span class="string">'http://glue.jjj.sun.ac.za/~james/IntroPython/images/binary.png'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="http://glue.jjj.sun.ac.za/~james/IntroPython/images/binary.png"></p>
+<p>这个图用邻接表表示就如程序中的 graph 变量。<br>这里巧妙地用了列表来存储节点。注意广度优先遍历和深度优先遍历只差一个：<br><strong>是先弹出(pop)最后一个还是第一个</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">graph=&#123; <span class="number">4</span>:[<span class="number">2</span>,<span class="number">6</span>], <span class="number">2</span>:[<span class="number">4</span>,<span class="number">1</span>,<span class="number">3</span>], <span class="number">6</span>:[<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>], <span class="number">3</span>:[<span class="number">2</span>], <span class="number">1</span>:[<span class="number">2</span>], <span class="number">5</span>:[<span class="number">6</span>], <span class="number">7</span>:[<span class="number">6</span>] &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dfs</span><span class="params">(graph, start)</span>:</span></span><br><span class="line">    path = []</span><br><span class="line">    lst = [start]</span><br><span class="line">    <span class="keyword">while</span> lst:</span><br><span class="line">        vertex = lst.pop(-<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> vertex <span class="keyword">not</span> <span class="keyword">in</span> path:</span><br><span class="line">            path.append(vertex)</span><br><span class="line">            lst.extend(graph[vertex])</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> dfs(graph, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">[<span class="number">4</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#graph=&#123; 4:[2,6], 2:[4,1,3], 6:[4,5,7], 3:[2], 1:[2], 5:[6], 7:[6] &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bfs</span><span class="params">(graph, start)</span>:</span></span><br><span class="line">    path = []</span><br><span class="line">    queue = [start]</span><br><span class="line">    <span class="keyword">while</span> queue:</span><br><span class="line">        vertex = queue.pop(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> vertex <span class="keyword">not</span> <span class="keyword">in</span> path:</span><br><span class="line">            path.append(vertex)</span><br><span class="line">            queue.extend(graph[vertex])</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> bfs(graph, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">[<span class="number">4</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>一开始我没有看明白，就一点一点来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">4</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst.pop(-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lst.extend([<span class="number">2</span>,<span class="number">6</span>])</span><br><span class="line"> lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+<p>这里是关键了，如果一直是 pop(-1)，那么后加进来的就会被先弹出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst.pop(-<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lst.extend([<span class="number">5</span>,<span class="number">7</span>])</span><br><span class="line">lst</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">2</span>, <span class="number">5</span>, <span class="number">7</span>]</span><br></pre></td></tr></table></figure>
+<p>到这里已经很清楚了，如果是弹出第一个，那么节点2会被先弹出，而不是7这样就是广度优先，如果先弹出最后一个节点，这里是7，就是深度优先。</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/algorithms/">algorithms</a><a href="/hexoblog/tags/graph/">graph</a><a href="/hexoblog/tags/python/">python</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+</body>
+</html>
