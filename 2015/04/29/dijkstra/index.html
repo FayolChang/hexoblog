@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>dijkstra 算法 | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="输入图 G，初始点src输出：初始点到所有点得最短路径
+思路：1.初始化，用字典表示，将所有点放入字典distance,distance[src] = 0,其余点设为 inf 。distance[v] 表示src 到 v 的当前最短距离。并设所有点为未访问过的 unvisited。
+2.探索和 sr">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">dijkstra 算法</h1>
+  
+
+    <time datetime="2015-04-29T10:46:15.000Z">
+  <span class="day">29</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <p>输入图 G，初始点src<br>输出：初始点到所有点得最短路径</p>
+<p>思路：<br>1.初始化，用字典表示，将所有点放入字典distance,distance[src] = 0,<br>其余点设为 inf 。<br>distance[v] 表示src 到 v 的当前最短距离。<br>并设所有点为未访问过的 unvisited。</p>
+<p>2.探索和 src 相邻的边，更新 src 相邻顶点 v 的值：<br>如果 distance[src]+weight[src][v] &lt; distance[v] ,就更新 distance[v]<br>且更新 unvisited[v]的距离</p>
+<p>3.将 src 的相邻边全部探索完毕后，<br>     将 src 设置为访问过的。（将 src 从 unvisited 中弹出）</p>
+<p>4.从剩下的unvisited 中，选取最小的顶点作为新的 src<br>这里有个小技巧(python): src = min(unvisited，<strong>key=unvisited.get</strong>).</p>
+<p>5.重复直到 unvisited 为空。</p>
+<p>个人理解这里的关键是：<strong>直到 src 的相邻边都探索完毕后，才将 src 设置为访问过的</strong></p>
+<p>之前从 src 更新 distance[v] 的值的时候，就把 v 设置成访问过的，这样是错的，因为可能还有从其他点来更新 distance[v].</p>
+<p>下面附上 wiki 伪代码和自己写得 python 代码</p>
+<pre><code> <span class="number">1</span>  <span class="function"><span class="keyword">function</span> <span class="title">Dijkstra</span><span class="params">(Graph, source)</span>:</span>
+ <span class="number">2</span>
+ <span class="number">3</span>      dist[source] ← <span class="number">0</span>                       <span class="comment">// Distance from source to source</span>
+ <span class="number">4</span>      prev[source] ← undefined               <span class="comment">// Previous node in optimal path initialization</span>
+ <span class="number">5</span>
+ <span class="number">6</span>      <span class="keyword">for</span> <span class="keyword">each</span> vertex v <span class="keyword">in</span> Graph:  <span class="comment">// Initialization</span>
+ <span class="number">7</span>          <span class="keyword">if</span> v ≠ source            <span class="comment">// Where v has not yet been removed from Q (unvisited nodes)</span>
+ <span class="number">8</span>              dist[v] ← infinity             <span class="comment">// Unknown distance function from source to v</span>
+ <span class="number">9</span>              prev[v] ← undefined            <span class="comment">// Previous node in optimal path from source</span>
+<span class="number">10</span>          <span class="keyword">end</span> <span class="keyword">if</span> 
+<span class="number">11</span>          <span class="keyword">add</span> v <span class="keyword">to</span> Q                     <span class="comment">// All nodes initially in Q (unvisited nodes)</span>
+<span class="number">12</span>      <span class="keyword">end</span> <span class="keyword">for</span>
+<span class="number">13</span>      
+<span class="number">14</span>      <span class="keyword">while</span> Q <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">empty</span>:
+<span class="number">15</span>          u ← vertex <span class="keyword">in</span> Q <span class="keyword">with</span> min dist[u]  <span class="comment">// Source node in first case</span>
+<span class="number">16</span>          <span class="keyword">remove</span> u <span class="keyword">from</span> Q 
+<span class="number">17</span>          
+<span class="number">18</span>          <span class="keyword">for</span> <span class="keyword">each</span> neighbor v <span class="keyword">of</span> u:           <span class="comment">// where v is still in Q.</span>
+<span class="number">19</span>              alt ← dist[u] + length(u, v)
+<span class="number">20</span>              <span class="keyword">if</span> alt &lt; dist[v]:               <span class="comment">// A shorter path to v has been found</span>
+<span class="number">21</span>                  dist[v] ← alt 
+<span class="number">22</span>                  prev[v] ← u 
+<span class="number">23</span>              <span class="keyword">end</span> <span class="keyword">if</span>
+<span class="number">24</span>          <span class="keyword">end</span> <span class="keyword">for</span>
+<span class="number">25</span>      <span class="keyword">end</span> <span class="keyword">while</span>
+<span class="number">26</span>
+<span class="number">27</span>      return dist[], prev[]
+<span class="number">28</span>
+<span class="number">29</span>  <span class="keyword">end</span> <span class="function"><span class="keyword">function</span></span>
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dijkstra</span><span class="params">(g,src)</span>:</span></span><br><span class="line">    distance = &#123;&#125;</span><br><span class="line">    <span class="comment">#predecessor = &#123;&#125;</span></span><br><span class="line">    <span class="comment">#visited = []</span></span><br><span class="line">    unvisited = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> vertex <span class="keyword">in</span> g:</span><br><span class="line">        distance[vertex] = float(<span class="string">'inf'</span>)</span><br><span class="line">        unvisited[vertex] = distance[vertex]</span><br><span class="line"></span><br><span class="line">    distance[src] = <span class="number">0</span></span><br><span class="line">    unvisited[src] = <span class="number">0</span></span><br><span class="line">    <span class="comment">#predecessor[src] = None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> unvisited:</span><br><span class="line">        <span class="comment">#这里将 src 放在这个位置，而不是 unvisited.pop语句附近，是到最后的时候 unvisited 为空，从而会导致错误。</span></span><br><span class="line">        src = min(unvisited,key = unvisited.get)</span><br><span class="line">        <span class="keyword">for</span> neighbor <span class="keyword">in</span> g[src]:</span><br><span class="line">            <span class="keyword">if</span> neighbor <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                new_distance = distance[src] + g[src][neighbor]</span><br><span class="line">                <span class="keyword">if</span> new_distance &lt; distance[neighbor]:</span><br><span class="line">                    distance[neighbor] = new_distance</span><br><span class="line">                    unvisited[neighbor] = new_distance</span><br><span class="line"></span><br><span class="line">        <span class="comment">#visited.append(src)</span></span><br><span class="line">        unvisited.pop(src)</span><br><span class="line">        predecessor[neighbor] = src</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> distance</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    mygraph = &#123;<span class="string">'s'</span>: &#123;<span class="string">'a'</span>: <span class="number">2</span>, <span class="string">'b'</span>: <span class="number">1</span>&#125;,</span><br><span class="line">               <span class="string">'a'</span>: &#123;<span class="string">'s'</span>: <span class="number">3</span>, <span class="string">'b'</span>: <span class="number">4</span>, <span class="string">'c'</span>: <span class="number">8</span>&#125;,</span><br><span class="line">               <span class="string">'b'</span>: &#123;<span class="string">'s'</span>: <span class="number">4</span>, <span class="string">'a'</span>: <span class="number">2</span>, <span class="string">'d'</span>: <span class="number">2</span>&#125;,</span><br><span class="line">               <span class="string">'c'</span>: &#123;<span class="string">'a'</span>: <span class="number">2</span>, <span class="string">'d'</span>: <span class="number">7</span>, <span class="string">'t'</span>: <span class="number">4</span>&#125;,</span><br><span class="line">               <span class="string">'d'</span>: &#123;<span class="string">'b'</span>: <span class="number">1</span>, <span class="string">'c'</span>: <span class="number">11</span>, <span class="string">'t'</span>: <span class="number">5</span>&#125;,</span><br><span class="line">               <span class="string">'t'</span>: &#123;<span class="string">'c'</span>: <span class="number">3</span>, <span class="string">'d'</span>: <span class="number">5</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">    dist = dijkstra(mygraph,<span class="string">'s'</span>)</span><br><span class="line"></span><br><span class="line">    print(dist)</span><br></pre></td></tr></table></figure>
+<p>wiki 里面有个用 priority queue 实现的，非常漂亮。不过我现在还没学 priority queue。</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/Graph/">Graph</a><a href="/hexoblog/tags/algorithms/">algorithms</a><a href="/hexoblog/tags/python/">python</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
