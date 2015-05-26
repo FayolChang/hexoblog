@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>binarysearchtree | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="&lt;!-- the code is from https://gist.github.com/thinkphp/1450738 --&gt;
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">binarysearchtree</h1>
+  
+
+    <time datetime="2015-04-30T02:50:16.000Z">
+  <span class="day">30</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <!-- the code is from https://gist.github.com/thinkphp/1450738 -->
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'''</span><br><span class="line">   by Adrian Statescu &lt;adrian@thinkphp.ro&gt;</span><br><span class="line">   Twitter: @thinkphp</span><br><span class="line">   G+     : http://gplus.to/thinkphp</span><br><span class="line">   MIT Style License</span><br><span class="line">'''</span></span><br><span class="line"><span class="string">'''</span><br><span class="line">   Binary Search Tree</span><br><span class="line">   ------------------</span><br><span class="line"></span><br><span class="line">   Trees can come in many different shapes, and they can vary in the number of children allowed per node or in the way</span><br><span class="line">   they organize data values within the nodes. One of the most commonly used trees in computer science is the binary tree.</span><br><span class="line">   A binary tree is a tree in which each node can have at most two children. On child is identified as the left child and</span><br><span class="line">   the other as the right child. The topmost node of the tree is known as the root node.It provides the single acccess point</span><br><span class="line">   into the structure. The root node is the only node in the tree that does not have an incoming edge (an edge directed towart it)</span><br><span class="line">   By definition every non=empty tree must have contain a root node.</span><br><span class="line">  </span><br><span class="line">'''</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span>:</span></span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,info)</span>:</span> <span class="comment">#constructor of class</span></span><br><span class="line"> </span><br><span class="line">          self.info = info  <span class="comment">#information for node</span></span><br><span class="line">          self.left = <span class="keyword">None</span>  <span class="comment">#left leef</span></span><br><span class="line">          self.right = <span class="keyword">None</span> <span class="comment">#right leef</span></span><br><span class="line">          self.level = <span class="keyword">None</span> <span class="comment">#level none defined</span></span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line"> </span><br><span class="line">          <span class="keyword">return</span> str(self.info) <span class="comment">#return as string</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">searchtree</span>:</span></span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span> <span class="comment">#constructor of class</span></span><br><span class="line"> </span><br><span class="line">          self.root = <span class="keyword">None</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self,val)</span>:</span>  <span class="comment">#create binary search tree nodes</span></span><br><span class="line"> </span><br><span class="line">          <span class="keyword">if</span> self.root == <span class="keyword">None</span>:</span><br><span class="line"> </span><br><span class="line">             self.root = Node(val)</span><br><span class="line"> </span><br><span class="line">          <span class="keyword">else</span>:</span><br><span class="line"> </span><br><span class="line">             current = self.root</span><br><span class="line"> </span><br><span class="line">             <span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line"> </span><br><span class="line">                 <span class="keyword">if</span> val &lt; current.info:</span><br><span class="line"> </span><br><span class="line">                   <span class="keyword">if</span> current.left:</span><br><span class="line">                      current = current.left</span><br><span class="line">                   <span class="keyword">else</span>:</span><br><span class="line">                      current.left = Node(val)</span><br><span class="line">                      <span class="keyword">break</span>;      </span><br><span class="line"> </span><br><span class="line">                 <span class="keyword">elif</span> val &gt; current.info:</span><br><span class="line">                 </span><br><span class="line">                    <span class="keyword">if</span> current.right:</span><br><span class="line">                       current = current.right</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                       current.right = Node(val)</span><br><span class="line">                       <span class="keyword">break</span>;      </span><br><span class="line"> </span><br><span class="line">                 <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">break</span> </span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">bft</span><span class="params">(self)</span>:</span> <span class="comment">#Breadth-First Traversal</span></span><br><span class="line"> </span><br><span class="line">          self.root.level = <span class="number">0</span> </span><br><span class="line">          queue = [self.root]</span><br><span class="line">          out = []</span><br><span class="line">          current_level = self.root.level</span><br><span class="line"> </span><br><span class="line">          <span class="keyword">while</span> len(queue) &gt; <span class="number">0</span>:</span><br><span class="line">                 </span><br><span class="line">             current_node = queue.pop(<span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line">             <span class="keyword">if</span> current_node.level &gt; current_level:</span><br><span class="line">                current_level += <span class="number">1</span></span><br><span class="line">                out.append(<span class="string">"\n"</span>)</span><br><span class="line"> </span><br><span class="line">             out.append(str(current_node.info) + <span class="string">" "</span>)</span><br><span class="line"> </span><br><span class="line">             <span class="keyword">if</span> current_node.left:</span><br><span class="line"> </span><br><span class="line">                current_node.left.level = current_level + <span class="number">1</span></span><br><span class="line">                queue.append(current_node.left)</span><br><span class="line">                  </span><br><span class="line"> </span><br><span class="line">             <span class="keyword">if</span> current_node.right:</span><br><span class="line"> </span><br><span class="line">                current_node.right.level = current_level + <span class="number">1</span></span><br><span class="line">                queue.append(current_node.right)</span><br><span class="line">                      </span><br><span class="line">                 </span><br><span class="line">          <span class="keyword">print</span> <span class="string">""</span>.join(out)   </span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">inorder</span><span class="params">(self,node)</span>:</span></span><br><span class="line">            </span><br><span class="line">           <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">              </span><br><span class="line">              self.inorder(node.left)</span><br><span class="line">              <span class="keyword">print</span> node.info</span><br><span class="line">              self.inorder(node.right)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">preorder</span><span class="params">(self,node)</span>:</span></span><br><span class="line">            </span><br><span class="line">           <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">              </span><br><span class="line">              <span class="keyword">print</span> node.info</span><br><span class="line">              self.preorder(node.left)</span><br><span class="line">              self.preorder(node.right)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">postorder</span><span class="params">(self,node)</span>:</span></span><br><span class="line">            </span><br><span class="line">           <span class="keyword">if</span> node <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">              </span><br><span class="line">              self.postorder(node.left)</span><br><span class="line">              self.postorder(node.right)</span><br><span class="line">              <span class="keyword">print</span> node.info</span><br><span class="line"> </span><br><span class="line">                        </span><br><span class="line">tree = searchtree()     </span><br><span class="line">arr = [<span class="number">8</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">14</span>,<span class="number">13</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> arr:</span><br><span class="line">    tree.create(i)</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Breadth-First Traversal'</span></span><br><span class="line">tree.bft()</span><br><span class="line"><span class="keyword">print</span> <span class="string">'Inorder Traversal'</span></span><br><span class="line">tree.inorder(tree.root) </span><br><span class="line"><span class="keyword">print</span> <span class="string">'Preorder Traversal'</span></span><br><span class="line">tree.preorder(tree.root) </span><br><span class="line"><span class="keyword">print</span> <span class="string">'Postorder Traversal'</span></span><br><span class="line">tree.postorder(tree.root)</span><br></pre></td></tr></table></figure>
+    
+    
+    <footer class="meta">
+      
+      
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

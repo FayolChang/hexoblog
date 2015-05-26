@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>floyd_warshall | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="wiki 伪代码
+algorithm1 let dist be a |V| × |V| array of minimum distances initialized to ∞ (infinity)
+2 for each vertex v
+3    dist[v][v] ← 0
+4 for each ">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">floyd_warshall</h1>
+  
+
+    <time datetime="2015-04-30T02:58:59.000Z">
+  <span class="day">30</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <p>wiki 伪代码</p>
+<h2 id="algorithm">algorithm</h2><pre><code>1 let dist be a |V| × |V| array of minimum distances initialized to ∞ (infinity)
+2 for each vertex v
+3    dist[<span class="link_label">v</span>][<span class="link_reference">v</span>] ← 0
+4 for each edge (u,v)
+5    dist[<span class="link_label">u</span>][<span class="link_reference">v</span>] ← w(u,v)  // the weight of the edge (u,v)
+6 for k from 1 to |V|
+7    for i from 1 to |V|
+8       for j from 1 to |V|
+9          if dist[<span class="link_label">i</span>][<span class="link_reference">j</span>] &gt; dist[<span class="link_label">i</span>][<span class="link_reference">k</span>] + dist[<span class="link_label">k</span>][<span class="link_reference">j</span>] 
+10             dist[<span class="link_label">i</span>][<span class="link_reference">j</span>] ← dist[<span class="link_label">i</span>][<span class="link_reference">k</span>] + dist[<span class="link_label">k</span>][<span class="link_reference">j</span>]
+11         end if
+</code></pre><h2 id="Path_reconstruction">Path reconstruction</h2><pre><code>let dist be a |V| × |V| <span class="keyword">array</span> <span class="keyword">of</span> minimum distances initialized <span class="keyword">to</span> ∞ (infinity)
+let <span class="keyword">next</span> be a |V| × |V| <span class="keyword">array</span> <span class="keyword">of</span> vertex indices initialized <span class="keyword">to</span> <span class="keyword">null</span>
+
+<span class="keyword">procedure</span> FloydWarshallWithPathReconstruction ()
+   <span class="keyword">for</span> each edge (u,v)
+      dist[u][v] ← w(u,v)  // the weight <span class="keyword">of</span> the edge (u,v)
+      <span class="keyword">next</span>[u][v] ← v
+   <span class="keyword">for</span> k from <span class="number">1</span> <span class="keyword">to</span> |V| // standard Floyd-Warshall implementation
+      <span class="keyword">for</span> i from <span class="number">1</span> <span class="keyword">to</span> |V|
+         <span class="keyword">for</span> j from <span class="number">1</span> <span class="keyword">to</span> |V|
+            <span class="keyword">if</span> dist[i][k] + dist[k][j] &lt; dist[i][j] <span class="keyword">then</span>
+               dist[i][j] ← dist[i][k] + dist[k][j]
+               <span class="keyword">next</span>[i][j] ← <span class="keyword">next</span>[i][k]
+
+<span class="keyword">procedure</span> Path(u, v)
+   <span class="keyword">if</span> <span class="keyword">next</span>[u][v] = <span class="keyword">null</span> <span class="keyword">then</span>
+       <span class="keyword">return</span> []
+   path = [u]
+   <span class="keyword">while</span> u ≠ v
+       u ← <span class="keyword">next</span>[u][v]
+       path.append(u)
+   <span class="keyword">return</span> path
+</code></pre>
+    
+    
+    <footer class="meta">
+      
+      
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>sympy tutorial | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="自从看了卡尔曼滤波的教程，看到里面用到了 sympy 来显示公式和进行公式推导，忍不住心里痒痒，就想学学该怎么用。
+from sympy import *
+from sympy.interactive import printing
+printing.init_printing(use_latex=">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">sympy tutorial</h1>
+  
+
+    <time datetime="2015-05-03T08:56:13.000Z">
+  <span class="day">3</span><span class="month">May</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <p>自从看了卡尔曼滤波的教程，看到里面用到了 sympy 来显示公式和进行公式推导，忍不住心里痒痒，就想学学该怎么用。</p>
+<pre><code><span class="keyword">from</span> sympy <span class="keyword">import</span> *
+<span class="keyword">from</span> sympy.interactive <span class="keyword">import</span> printing
+printing.init_printing(use_latex=<span class="keyword">True</span>)
+</code></pre><p>这里默认使用 ipython notebook，上面的语句会使用比较漂亮的方式来显示公式。</p>
+<h2 id="本文主要记录:">本文主要记录:</h2><p>1.变量的定义</p>
+<p>2.演算</p>
+<ul>
+<li>极限</li>
+<li>微分</li>
+<li>级数展开</li>
+<li>求和</li>
+<li>积分</li>
+<li>复数</li>
+<li>函数</li>
+<li>微分方程</li>
+<li>代数方程</li>
+<li>矩阵</li>
+</ul>
+<h2 id="变量的定义">变量的定义</h2><p>变量的定义使用 symbols 函数，可以限制变量的类型，比如为整数或者为函数等。</p>
+<pre><code>x, y, z, t = <span class="function"><span class="title">symbols</span><span class="params">(<span class="string">'x y z t'</span>)</span></span>
+
+
+<span class="tag">i</span>,k, m, n = <span class="function"><span class="title">symbols</span><span class="params">(<span class="string">'i k m n'</span>, integer=True)</span></span>
+
+
+f, g, h = <span class="function"><span class="title">symbols</span><span class="params">(<span class="string">'f g h'</span>, cls=Function)</span></span>
+
+
+<span class="function"><span class="title">symbols</span><span class="params">(<span class="string">'x:10'</span>)</span></span>
+</code></pre><p>$$\left ( x_0, \quad x_1, \quad x_2, \quad x_3, \quad x_4, \quad x_5, \quad x_6, \quad x_7, \quad x_8, \quad x_9\right )$$</p>
+<h2 id="极限">极限</h2><pre><code>limit<span class="list">(<span class="keyword">sin</span><span class="list">(<span class="keyword">x</span>)</span>/x,x,<span class="number">0</span>)</span>
+</code></pre><p>$$1$$</p>
+<p><strong>大小写的区别是大写不运算，小写给出运算结果</strong></p>
+<pre><code>Limit<span class="list">(<span class="list">(<span class="number">3</span> <span class="variable">* n *</span><span class="variable">* 2 + 2 *</span> n )</span>/ <span class="list">(<span class="keyword">n</span> <span class="variable">**</span> <span class="number">2</span> + <span class="number">5</span>)</span>,n,oo)</span>
+</code></pre><p>$$\lim_{n \to \infty}\left(\frac{3 n^{2} + 2 n}{n^{2} + 5}\right)$$</p>
+<pre><code>limit<span class="list">(<span class="list">(<span class="number">3</span> <span class="variable">* n *</span><span class="variable">* 2 + 2 *</span> n )</span>/ <span class="list">(<span class="keyword">n</span> <span class="variable">**</span> <span class="number">2</span> + <span class="number">5</span>)</span>,n,oo)</span>
+</code></pre><p>$$3$$</p>
+<h2 id="微分">微分</h2><pre><code>diff<span class="list">(<span class="keyword">sin</span><span class="list">(<span class="keyword">x</span>)</span>,x)</span>
+</code></pre><p>$$\cos{\left (x \right )}$$</p>
+<pre><code><span class="function"><span class="title">diff</span><span class="params">(sin(<span class="number">2</span>*x)</span></span>, x, <span class="number">2</span>)
+</code></pre><p>$$- 4 \sin{\left (2 x \right )}$$</p>
+<h2 id="积分">积分</h2><pre><code>Integral<span class="list">(<span class="keyword">sqrt</span><span class="list">(<span class="number">1</span>/x)</span>,x)</span>
+</code></pre><p>$$\int \sqrt{\frac{1}{x}}\, dx$$</p>
+<pre><code>integrate<span class="list">(<span class="keyword">sqrt</span><span class="list">(<span class="number">1</span>/x)</span>,x)</span>
+</code></pre><p>$$2 x \sqrt{\frac{1}{x}}$$</p>
+<pre><code>integrate<span class="list">(<span class="keyword">sqrt</span><span class="list">(<span class="number">1</span>/x)</span>,<span class="list">(<span class="keyword">x</span>,<span class="number">1</span>,<span class="number">2</span>)</span>)</span>
+</code></pre><p>$$-2 + 2 \sqrt{2}$$</p>
+<h2 id="多项式">多项式</h2><pre><code>expand<span class="list">(<span class="list">(<span class="keyword">x</span> + <span class="number">1</span>)</span><span class="variable">**</span><span class="number">2</span>)</span>
+</code></pre><p>$$x^{2} + 2 x + 1$$</p>
+<pre><code>factor(x<span class="keyword">*</span><span class="keyword">*</span>3 - x<span class="keyword">*</span><span class="keyword">*</span>2 + x - 1)
+</code></pre><p>$$\left(x - 1\right) \left(x^{2} + 1\right)$$</p>
+<h2 id="级数展开">级数展开</h2><p>使用.series(var, point, order):</p>
+<pre><code>(<span class="number">1</span>/<span class="function"><span class="title">cos</span><span class="params">(x)</span></span>).<span class="function"><span class="title">series</span><span class="params">(x, <span class="number">0</span>, <span class="number">10</span>)</span></span>
+</code></pre><p>$$1 + \frac{x^{2}}{2} + \frac{5 x^{4}}{24} + \frac{61 x^{6}}{720} + \frac{277 x^{8}}{8064} + \mathcal{O}\left(x^{10}\right)$$</p>
+<pre><code><span class="function"><span class="title">integrate</span><span class="params">(exp(-x ** <span class="number">2</span>)</span></span>,x).<span class="function"><span class="title">series</span><span class="params">(x,<span class="number">0</span>,<span class="number">10</span>)</span></span>
+</code></pre><p>$$x - \frac{x^{3}}{3} + \frac{x^{5}}{10} - \frac{x^{7}}{42} + \frac{x^{9}}{216} + \mathcal{O}\left(x^{10}\right)$$</p>
+<h3 id="画出级数图形">画出级数图形</h3><pre><code>%matplotlib inline
+<span class="keyword">import</span> numpy <span class="keyword">as</span> np
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="function"><span class="keyword">def</span> <span class="title">plot_taylor_approximations</span><span class="params">(func, x0=None, orders=<span class="params">(<span class="number">2</span>, <span class="number">4</span>)</span>, xrange=<span class="params">(<span class="number">0</span>,<span class="number">1</span>)</span>, yrange=None, npts=<span class="number">200</span>)</span>:</span>
+    <span class="string">"""Plot the Taylor series approximations to a function at various orders.
+
+    Parameters
+    ----------
+    func : a sympy function
+    x0 : float
+      Origin of the Taylor series expansion.  If not given, x0=xrange[0].
+    orders : list
+      List of integers with the orders of Taylor series to show.  Default is (2, 4).
+    xrange : 2-tuple or array.
+      Either an (xmin, xmax) tuple indicating the x range for the plot (default is (0, 1)),
+      or the actual array of values to use.
+    yrange : 2-tuple
+      (ymin, ymax) tuple indicating the y range for the plot.  If not given,
+      the full range of values will be automatically used. 
+    npts : int
+      Number of points to sample the x range with.  Default is 200.
+    """</span>
+    <span class="keyword">if</span> <span class="keyword">not</span> callable(func):
+        <span class="keyword">raise</span> ValueError(<span class="string">'func must be callable'</span>)
+    <span class="keyword">if</span> isinstance(xrange, (list, tuple)):
+        x = np.linspace(float(xrange[<span class="number">0</span>]), float(xrange[<span class="number">1</span>]), npts)
+    <span class="keyword">else</span>:
+        x = xrange
+    <span class="keyword">if</span> x0 <span class="keyword">is</span> <span class="keyword">None</span>: x0 = x[<span class="number">0</span>]
+    xs = Symbol(<span class="string">'x'</span>)
+    <span class="comment"># Make a numpy-callable form of the original function for plotting</span>
+    fx = func(xs)
+    f = lambdify(xs, fx, modules=[<span class="string">'numpy'</span>])
+    <span class="comment"># We could use latex(fx) instead of str(), but matploblib gets confused</span>
+    <span class="comment"># with some of the (valid) latex constructs sympy emits.  So we play it safe.</span>
+    plt.plot(x, f(x), label=str(fx), lw=<span class="number">2</span>)
+    <span class="comment"># Build the Taylor approximations, plotting as we go</span>
+    apps = {}
+    <span class="keyword">for</span> order <span class="keyword">in</span> orders:
+        app = fx.series(xs, x0, n=order).removeO()
+        apps[order] = app
+        <span class="comment"># Must be careful here: if the approximation is a constant, we can't</span>
+        <span class="comment"># blindly use lambdify as it won't do the right thing.  In that case, </span>
+        <span class="comment"># evaluate the number as a float and fill the y array with that value.</span>
+        <span class="keyword">if</span> isinstance(app, numbers.Number):
+            y = np.zeros_like(x)
+            y.fill(app.evalf())
+        <span class="keyword">else</span>:
+            fa = lambdify(xs, app, modules=[<span class="string">'numpy'</span>])
+            y = fa(x)
+        tex = latex(app).replace(<span class="string">'$'</span>, <span class="string">''</span>)
+        plt.plot(x, y, label=<span class="string">r'$n=%s:\, %s$'</span> % (order, tex) )
+
+    <span class="comment"># Plot refinements</span>
+    <span class="keyword">if</span> yrange <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:
+        plt.ylim(*yrange)
+    plt.grid()
+    plt.legend(loc=<span class="string">'best'</span>).get_frame().set_alpha(<span class="number">0.8</span>)
+
+
+<span class="comment"># You can change the default figure size to be a bit larger if you want,</span>
+<span class="comment"># uncomment the next line for that:</span>
+<span class="comment">#plt.rc('figure', figsize=(10, 6))</span>
+plt.rc(<span class="string">'figure'</span>, figsize=(<span class="number">15</span>, <span class="number">9</span>))
+plot_taylor_approximations(sin, <span class="number">0</span>, [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>], (<span class="number">0</span>, <span class="number">2</span>*pi), (-<span class="number">2</span>,<span class="number">2</span>))
+</code></pre><img src="/hexoblog/2015/05/03/sympy-tutorial/sympy-tutorial_30_0.png">
+<h2 id="求和">求和</h2><pre><code>Sum<span class="list">(<span class="keyword">i</span> <span class="variable">**</span> <span class="number">2</span>,<span class="list">(<span class="keyword">i</span>,<span class="number">1</span>,n)</span>)</span>
+</code></pre><p>$$\sum_{i=1}^{n} i^{2}$$</p>
+<pre><code><span class="function"><span class="title">Sum</span><span class="params">(i ** <span class="number">2</span>,(i,<span class="number">1</span>,n)</span></span>).<span class="function"><span class="title">doit</span><span class="params">()</span></span>
+</code></pre><p>$$\frac{n^{3}}{3} + \frac{n^{2}}{2} + \frac{n}{6}$$</p>
+<h2 id="复数">复数</h2><pre><code><span class="function"><span class="title">exp</span><span class="params">(I*x)</span></span>.<span class="function"><span class="title">expand</span><span class="params">()</span></span>
+</code></pre><p>$$e^{i x}$$</p>
+<pre><code><span class="function"><span class="title">exp</span><span class="params">(I*x)</span></span>.<span class="function"><span class="title">expand</span><span class="params">(complex = True)</span></span>
+</code></pre><p>$$i e^{- \Im{x}} \sin{\left (\Re{x} \right )} + e^{- \Im{x}} \cos{\left (\Re{x} \right )}$$</p>
+<h2 id="微分方程">微分方程</h2><pre><code><span class="function"><span class="title">f</span><span class="params">(x)</span></span>.<span class="function"><span class="title">diff</span><span class="params">(x, x)</span></span> + <span class="function"><span class="title">f</span><span class="params">(x)</span></span>
+</code></pre><p>$$f{\left (x \right )} + \frac{d^{2}}{d x^{2}}  f{\left (x \right )}$$</p>
+<pre><code><span class="function"><span class="title">dsolve</span><span class="params">(f(x)</span></span>.<span class="function"><span class="title">diff</span><span class="params">(x, x)</span></span> + <span class="function"><span class="title">f</span><span class="params">(x)</span></span>, <span class="function"><span class="title">f</span><span class="params">(x)</span></span>)
+</code></pre><p>$$<br>f(x) = C_1 \sin(x) + C_2 \cos(x)<br>$$</p>
+<h2 id="矩阵">矩阵</h2><pre><code>A = Matrix([[x <span class="keyword">*</span><span class="keyword">*</span> 2,2<span class="keyword">*</span>x<span class="keyword">*</span>y], [2<span class="keyword">*</span>x<span class="keyword">*</span>y,y <span class="keyword">*</span><span class="keyword">*</span> 2]])
+
+
+A
+</code></pre><p>$$\left[\begin{matrix}x^{2} &amp; 2 x y\\2 x y &amp; y^{2}\end{matrix}\right]$$</p>
+<pre><code>A <span class="keyword">*</span><span class="keyword">*</span> 2
+</code></pre><p>$$\left[\begin{matrix}x^{4} + 4 x^{2} y^{2} &amp; 2 x^{3} y + 2 x y^{3}\\2 x^{3} y + 2 x y^{3} &amp; 4 x^{2} y^{2} + y^{4}\end{matrix}\right]$$</p>
+<pre><code>variables = Matrix<span class="comment">([x,y])</span>
+
+
+<span class="comment">(A ** 2)</span>.row<span class="comment">(0)</span>
+</code></pre><p>$$\left[\begin{matrix}x^{4} + 4 x^{2} y^{2} &amp; 2 x^{3} y + 2 x y^{3}\end{matrix}\right]$$</p>
+<pre><code>(A <span class="keyword">*</span><span class="keyword">*</span> 2).row(0).jacobian(variables)
+</code></pre><p>$$\left[\begin{matrix}4 x^{3} + 8 x y^{2} &amp; 8 x^{2} y\\6 x^{2} y + 2 y^{3} &amp; 2 x^{3} + 6 x y^{2}\end{matrix}\right]$$</p>
+<pre><code>hessian<span class="list">(<span class="keyword">f</span><span class="list">(<span class="keyword">x</span>,y)</span>,<span class="list">(<span class="keyword">x</span>,y)</span>)</span>
+</code></pre><p>$$\left[\begin{matrix}\frac{\partial^{2}}{\partial x^{2}}  f{\left (x,y \right )} &amp; \frac{\partial^{2}}{\partial x\partial y}  f{\left (x,y \right )}\\<br>\frac{\partial^{2}}{\partial x\partial y}  f{\left (x,y \right )} &amp; \frac{\partial^{2}}{\partial y^{2}}  f{\left (x,y \right )}\end{matrix}\right]$$</p>
+<pre><code>diff<span class="list">(<span class="keyword">f</span><span class="list">(<span class="keyword">x</span>,y)</span>,x)</span>
+</code></pre><p>$$\frac{\partial}{\partial x} f{\left (x,y \right )}$$</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/python/">python</a><a href="/hexoblog/tags/sympy/">sympy</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

@@ -3,9 +3,13 @@
 <head>
   <meta charset="utf-8">
   
-  <title>algorithms | Machine Learning, Algorithms and others</title>
+  <title>machine-learning-work-flow | Machine Learning, Algorithms and others</title>
   <meta name="author" content="Fayou Zhang">
 
+  
+  <meta name="description" content="数据预处理去掉零方差、多重共线性等在 scikit-learn 中，可以使用 sklearn.feature_selection 模块中的相应函数：
+Removing features with low varianceVarianceThreshold 
+Univariate feature se">
   
   
 
@@ -26,95 +30,70 @@
     
   </ul>
 </nav></header>
-  <div id="content" class="inner">
-
-<header id="archive-header">
-  <h1 class="alignleft">標籤：algorithms</h1>
-  <div class="search alignright">
-    <form action="http://google.com/search" method="get" accept-charset="utf-8">
-      <input type="search" name="q" results="0" placeholder="搜尋">
-      <input type="hidden" name="q" value="site:yoursite.com">
-    </form>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
   </div>
-</header>
-
-
-  
-  
-    
-    
-      
-      </section><section class="archives"><div class="year">2015</div>
-    
-    <article class="archive">
-      <h1 class="title"><a href="/hexoblog/2015/04/29/BellmanFord/">BellmanFord</a></h1>
-      <footer>
-        <time datetime="2015-04-29T11:30:43.000Z">Apr 29</time>
-        
-        
-          <span class="tags">
-<a href="/hexoblog/tags/algorithms/">algorithms</a>, <a href="/hexoblog/tags/graph/">graph</a>, <a href="/hexoblog/tags/python/">python</a></span>
-        
-      </footer>
-    </article>
-  
-    
-    
-    <article class="archive">
-      <h1 class="title"><a href="/hexoblog/2015/04/29/dijkstra/">dijkstra 算法</a></h1>
-      <footer>
-        <time datetime="2015-04-29T10:46:15.000Z">Apr 29</time>
-        
-        
-          <span class="tags">
-<a href="/hexoblog/tags/Graph/">Graph</a>, <a href="/hexoblog/tags/algorithms/">algorithms</a>, <a href="/hexoblog/tags/python/">python</a></span>
-        
-      </footer>
-    </article>
-  
-    
-    
-    <article class="archive">
-      <h1 class="title"><a href="/hexoblog/2015/04/27/binarysearch/">binary search</a></h1>
-      <footer>
-        <time datetime="2015-04-27T09:31:54.000Z">Apr 27</time>
-        
-        
-          <span class="tags">
-<a href="/hexoblog/tags/algorithms/">algorithms</a>, <a href="/hexoblog/tags/python/">python</a>, <a href="/hexoblog/tags/search/">search</a></span>
-        
-      </footer>
-    </article>
-  
-    
-    
-    <article class="archive">
-      <h1 class="title"><a href="/hexoblog/2015/04/27/kruskal/">kruskal</a></h1>
-      <footer>
-        <time datetime="2015-04-27T04:20:47.000Z">Apr 27</time>
-        
-        
-          <span class="tags">
-<a href="/hexoblog/tags/algorithms/">algorithms</a>, <a href="/hexoblog/tags/graph/">graph</a>, <a href="/hexoblog/tags/python/">python</a></span>
-        
-      </footer>
-    </article>
-  
-    
-    
-    <article class="archive">
-      <h1 class="title"><a href="/hexoblog/2015/04/24/binary_tree_traversal/">DFS and BFS</a></h1>
-      <footer>
-        <time datetime="2015-04-24T04:20:47.000Z">Apr 24</time>
-        
-        
-          <span class="tags">
-<a href="/hexoblog/tags/algorithms/">algorithms</a>, <a href="/hexoblog/tags/graph/">graph</a>, <a href="/hexoblog/tags/python/">python</a></span>
-        
-      </footer>
-    </article>
-  
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
 </div>
+  
+  <header>
+    
+  
+    <h1 class="title">machine-learning-work-flow</h1>
+  
+
+    <time datetime="2015-05-14T10:57:33.000Z">
+  <span class="day">14</span><span class="month">May</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="数据预处理">数据预处理</h2><p>去掉零方差、多重共线性等<br>在 scikit-learn 中，可以使用 sklearn.feature_selection 模块中的相应函数：</p>
+<h3 id="Removing_features_with_low_variance">Removing features with low variance</h3><p>VarianceThreshold </p>
+<h3 id="Univariate_feature_selection">Univariate feature selection</h3><ul>
+<li><strong>SelectKBest</strong> removes all but the k highest scoring features</li>
+<li><strong>SelectPercentile</strong> removes all but a user-specified highest scoring percentage of features</li>
+<li>using common univariate statistical tests for each feature: false positive rate <strong>SelectFpr</strong>, false discovery rate <strong>SelectFdr</strong>, or family wise error <strong>SelectFwe</strong>.</li>
+<li><strong>GenericUnivariateSelect</strong> allows to perform univariate feature<br>selection with a configurable strategy. This allows to select the best univariate selection strategy with hyper-parameter search estimator.</li>
+</ul>
+<h3 id="Recursive_feature_elimination">Recursive feature elimination</h3><ul>
+<li>RFE</li>
+<li>RFECV</li>
+</ul>
+<h3 id="L1-based_feature_selection">L1-based feature selection</h3><ul>
+<li>linear_model.Lasso </li>
+<li>linear_model.LogisticRegression</li>
+<li>svm.LinearSVC</li>
+<li>RandomizedLasso</li>
+<li>RandomizedLogisticRegression</li>
+<li>lasso_stability_path</li>
+</ul>
+<h3 id="Tree-based_feature_selection">Tree-based feature selection</h3><ul>
+<li>ExtraTreesClassifier in sklearn.ensemble</li>
+</ul>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/machine-learning/">machine learning</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
   <footer id="footer" class="inner"><div class="social alignright">
   
   

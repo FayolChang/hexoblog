@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="bokeh 笔记
+The basic steps to creating plots with the bokeh.plotting interface are:1.Prepare some data (in this case plain python lists).2.Tell Bokeh wh">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"></h1>
+  
+
+    <time datetime="2015-05-26T00:32:59.000Z">
+  <span class="day">26</span><span class="month">May</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h1 id="bokeh_笔记">bokeh 笔记</h1><blockquote>
+<p>The basic steps to creating plots with the bokeh.plotting interface are:<br>1.Prepare some data (in this case plain python lists).<br>2.Tell Bokeh where to generate output (in this case using output_file(), with “lines.html” as the filename to save as).<br>3.Call figure() to create a plot with some overall options like title, tools and axes labels.<br>4.Add renderers (in this case, Figure.line) for our data, with visual customizations like colors, legends and widths to the plot.<br>5.Ask Bokeh to show() or save() the results.</p>
+</blockquote>
+<h2 id="the_bokeh-plotting_Interface">the bokeh.plotting Interface</h2><h3 id="生成数据">生成数据</h3><p>可以是 list, array? DataFrame(pandas)?</p>
+<h3 id="指定输出">指定输出</h3><p>可以是一个 html 文件或者是 ipython notebook</p>
+<h3 id="生成一个_figure">生成一个 figure</h3><p>这一步使用 figure 函数 生成一个图，在这一步可以设定图形的一些参数：</p>
+<ul>
+<li>title</li>
+<li>plot_width,plot_height</li>
+<li>x_axis_label,y_axis_label</li>
+<li>x_range , y_range 可以是2个元素的列表或者元组:[1,10] or (1,10)</li>
+<li>tools,可以从这里面随便选TOOLS=”resize,crosshair,pan,wheel_zoom,box_zoom,reset,box_select,lasso_select”</li>
+<li>x_axis_type,y_axis_type</li>
+<li>legend</li>
+<li>toolbar_location:  could be  “above” “below” “left”,”right”</li>
+</ul>
+<h3 id="利用数据绘图">利用数据绘图</h3><p>在这一步才是利用数据绘图。<br>bokeh provides several functions to draw different shape of glyphs.</p>
+<ul>
+<li>‘annular_wedge’,</li>
+<li>‘annulus’,</li>
+<li>‘arc’,</li>
+<li>‘asterisk’,</li>
+<li>‘bezier’,</li>
+<li>‘circle’,</li>
+<li>‘circle_cross’,</li>
+<li>‘circle_x’,</li>
+<li>‘cross’,</li>
+<li>‘diamond’,</li>
+<li>‘diamond_cross’,</li>
+<li>‘image’,</li>
+<li>‘image_rgba’,</li>
+<li>‘image_url’,</li>
+<li>‘inverted_triangle’,</li>
+<li>‘line’,</li>
+<li>‘multi_line’,</li>
+<li>‘oval’,</li>
+<li>‘patch’,</li>
+<li>‘patches’,</li>
+<li>…</li>
+</ul>
+<p>more than I can image. each glyph has its own parameters. these functions return  a <code>plot</code></p>
+<h3 id="show_the_plot">show the plot</h3><p>Finally, <code>show</code> function shows the plot.</p>
+<h2 id="bokeh-charts_Interface">bokeh.charts Interface</h2><p>In this Interface, there are several functions:<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'Area'</span>,</span><br><span class="line"><span class="string">'Bar'</span>,</span><br><span class="line"><span class="string">'BoxPlot'</span>,</span><br><span class="line"><span class="string">'ColumnDataSource'</span>,</span><br><span class="line"><span class="string">'DataAdapter'</span>,</span><br><span class="line"> <span class="string">'Donut'</span>,</span><br><span class="line"> <span class="string">'Dot'</span>,</span><br><span class="line"> <span class="string">'HBox'</span>,</span><br><span class="line"> <span class="string">'HeatMap'</span>,</span><br><span class="line"> <span class="string">'Histogram'</span>,</span><br><span class="line"> <span class="string">'Horizon'</span>,</span><br><span class="line"> <span class="string">'Line'</span>,</span><br><span class="line"> <span class="string">'Scatter'</span>,</span><br><span class="line"> <span class="string">'Step'</span>,</span><br><span class="line"> <span class="string">'TimeSeries'</span>,</span><br><span class="line"> <span class="string">'VBox'</span>,</span><br></pre></td></tr></table></figure></p>
+
+    
+    
+    <footer class="meta">
+      
+      
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

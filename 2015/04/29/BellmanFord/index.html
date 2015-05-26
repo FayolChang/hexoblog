@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>BellmanFord | Machine Learning, Algorithms and others</title>
+  <meta name="author" content="Fayou Zhang">
+
+  
+  <meta name="description" content="按照维基百科的说法，BellmanFord 算法也是用来处理单源最短路径问题的，但是和 dijkstra 算法不同的是，它可以处理负的权值。
+仔细观察wiki 的伪代码发现，虽然第二步都是用了2重循环，但是 dijkstra 算法是优先选择了最小的边所在点。即：当探索完 src 的所有边，并更新了所">
+  
+  
+
+  <link rel="alternate" href="/hexoblog/atom.xml" title="Machine Learning, Algorithms and others" type="application/atom+xml">
+  <link rel="stylesheet" href="/hexoblog/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">BellmanFord</h1>
+  
+
+    <time datetime="2015-04-29T11:30:43.000Z">
+  <span class="day">29</span><span class="month">Apr</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <p>按照维基百科的说法，BellmanFord 算法也是用来处理单源最短路径问题的，但是和 dijkstra 算法不同的是，它可以处理负的权值。</p>
+<p>仔细观察wiki 的伪代码发现，虽然第二步都是用了2重循环，但是 dijkstra 算法是优先选择了最小的边所在点。即：当探索完 src 的所有边，并更新了所有对应的 v 时，会选择剩下未探索的最小的 v 作为下一个 src。<br>BellmanFord 没有做这些处理。</p>
+<p>导致 dijkstra 不能处理负权，原因在于Dijkstra的贪心算法的本质是如下条件要成立：<br>如果存在某条路径p,使得p是从顶点u到v的最短路径：$p = u-&gt;v_1 -&gt; v_2 \cdots -&gt;v_n-&gt;v$,则对于任意的$1\leq k \leq n$,需要满足 $ d(u,v_k)&lt;d(u,v) $。</p>
+<h2 id="算法导论伪代码">算法导论伪代码</h2><pre><code>BELLMAN-FORD(<span class="keyword">G</span>, w, s)
+1  INITIALIZE-SINGLE-SOURCE(<span class="keyword">G</span>, s)
+2  <span class="keyword">for</span> i ← 1 to |V[<span class="keyword">G</span>]| - 1
+3       <span class="keyword">do</span> <span class="keyword">for</span> each edge (<span class="keyword">u</span>, v) ∈ <span class="keyword">E</span>[<span class="keyword">G</span>]
+4              <span class="keyword">do</span> RELAX(<span class="keyword">u</span>, v, w)
+5  <span class="keyword">for</span> each edge (<span class="keyword">u</span>, v) ∈ <span class="keyword">E</span>[<span class="keyword">G</span>]
+6       <span class="keyword">do</span> <span class="keyword">if</span> <span class="keyword">d</span>[v] &gt; <span class="keyword">d</span>[<span class="keyword">u</span>] + <span class="literal">w</span>(<span class="keyword">u</span>, v)
+7             then <span class="keyword">return</span> FALSE
+8  <span class="keyword">return</span> TRUE
+</code></pre><h2 id="wiki_伪代码">wiki 伪代码</h2><pre><code><span class="function"><span class="keyword">function</span> <span class="title">BellmanFord</span>(<span class="title">list</span> <span class="title">vertices</span>, <span class="title">list</span> <span class="title">edges</span>, <span class="title">vertex</span> <span class="title">source</span>)</span>
+   ::distance[],predecessor[]
+
+  <span class="comment"> // This implementation takes in a graph, represented as</span>
+  <span class="comment"> // lists of vertices and edges, and fills two arrays</span>
+  <span class="comment"> // (distance and predecessor) with shortest-path</span>
+  <span class="comment"> // (less cost/distance/metric) information</span>
+
+  <span class="comment"> // Step 1: initialize graph</span>
+   <span class="keyword">for</span> <span class="keyword">each</span> vertex v <span class="operator">in</span> vertices:
+       <span class="keyword">if</span> v is source <span class="keyword">then</span> distance[v] := <span class="number">0</span>
+       <span class="keyword">else</span> distance[v] := inf
+       predecessor[v] := <span class="constant">null</span>
+
+  <span class="comment"> // Step 2: relax edges repeatedly</span>
+   <span class="keyword">for</span> i <span class="built_in">from</span> <span class="number">1</span> <span class="built_in">to</span> size(vertices)-<span class="number">1</span>:
+       <span class="keyword">for</span> <span class="keyword">each</span> edge (u, v) <span class="operator">with</span> weight w <span class="operator">in</span> edges:
+           <span class="keyword">if</span> distance[u] + w &lt; distance[v]:
+               distance[v] := distance[u] + w
+               predecessor[v] := u
+
+  <span class="comment"> // Step 3: check for negative-weight cycles</span>
+   <span class="keyword">for</span> <span class="keyword">each</span> edge (u, v) <span class="operator">with</span> weight w <span class="operator">in</span> edges:
+       <span class="keyword">if</span> distance[u] + w &lt; distance[v]:
+           error <span class="string">"Graph contains a negative-weight cycle"</span>
+   <span class="constant">return</span> distance[], predecessor[]
+</code></pre><p>补充:<br>考虑：为什么要循环V-1次？<br>答：因为最短路径肯定是个简单路径，不可能包含回路的，<br>如果包含回路，且回路的权值和为正的，那么去掉这个回路，可以得到更短的路径<br>如果回路的权值是负的，那么肯定没有解了</p>
+<p>图有n个点，又不能有回路<br>所以最短路径最多n-1边</p>
+<p>又因为每次循环，至少relax一边<br>所以最多n-1次就行了</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/hexoblog/tags/algorithms/">algorithms</a><a href="/hexoblog/tags/graph/">graph</a><a href="/hexoblog/tags/python/">python</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/hexoblog/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2015 Fayou Zhang
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/hexoblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/hexoblog/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/hexoblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/hexoblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/hexoblog/js/phasebeam.js"></script>
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
